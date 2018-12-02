@@ -1146,12 +1146,21 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	self->takedamage = DAMAGE_YES;
 	self->s.skinnum |= 1;
 
-	if (self->s.skinnum == 1)
-		gi.sound (self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
-	else if (self->s.skinnum == 3)
-		gi.sound (self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
-	else // (self->s.skinnum == 5)
-		gi.sound (self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
+	if (self->s.skinnum == 1) {
+		gi.bprintf(PRINT_HIGH, "%s killed\n", "Light");
+		gi.sound(self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
+		attacker->client->pers.XP += 15;
+	}
+	else if (self->s.skinnum == 3) {
+		gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
+		gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
+		attacker->client->pers.XP += 15;
+	}
+	else { // (self->s.skinnum == 5)
+		gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
+		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
+		attacker->client->pers.XP += 15;
+	}
 
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)
 	{
@@ -1171,6 +1180,8 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		self->monsterinfo.currentmove = &soldier_move_death5;
 	else
 		self->monsterinfo.currentmove = &soldier_move_death6;
+
+	
 }
 
 
@@ -1235,6 +1246,7 @@ void SP_monster_soldier_light (edict_t *self)
 	self->s.skinnum = 0;
 	self->health = 20;
 	self->gib_health = -30;
+	
 }
 
 /*QUAKED monster_soldier (1 .5 0) (-16 -16 -24) (16 16 32) Ambush Trigger_Spawn Sight
