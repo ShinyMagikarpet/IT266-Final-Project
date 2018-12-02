@@ -880,6 +880,24 @@ void Cmd_PlayerList_f(edict_t *ent)
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
 
+/*
+Get Level of stuff
+*/
+void Cmd_Get_Level_f(edict_t *ent) {
+
+
+
+}
+
+/*
+Get XP of stuff
+*/
+void Cmd_GetXp_f(edict_t *ent) {
+
+
+
+}
+
 
 /*
 =================

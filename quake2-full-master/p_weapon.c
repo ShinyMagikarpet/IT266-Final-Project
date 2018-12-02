@@ -811,6 +811,8 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	ent->client->kick_angles[0] = -1;
 
 	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
+	gi.bprintf(PRINT_HIGH, "Player Level is %i \n", ent->client->pers.Level);
+	gi.bprintf(PRINT_HIGH, "Player XP is %i \n", ent->client->pers.XP);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -852,6 +854,8 @@ void Weapon_HyperBlaster_Fire (edict_t *ent)
 	vec3_t	offset;
 	int		effect;
 	int		damage;
+	int		xp;
+	int		itemLevel;
 
 	ent->client->weapon_sound = gi.soundindex("weapons/hyprbl1a.wav");
 

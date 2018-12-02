@@ -597,17 +597,20 @@ void InitClientPersistant (gclient_t *client)
 
 	client->pers.weapon = item;
 
-	client->pers.health			= 100;
-	client->pers.max_health		= 100;
-
+	client->pers.health			= 150;
+	client->pers.max_health		= 200;
 	client->pers.max_bullets	= 200;
 	client->pers.max_shells		= 100;
 	client->pers.max_rockets	= 50;
 	client->pers.max_grenades	= 50;
 	client->pers.max_cells		= 200;
 	client->pers.max_slugs		= 50;
+	client->pers.Level			= 1; //Sets player level to 1 when game starts
+	client->pers.XP				= 0;//Sets player XP to 0 when game starts
 
 	client->pers.connected = true;
+
+
 }
 
 

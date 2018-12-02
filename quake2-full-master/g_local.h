@@ -844,6 +844,9 @@ typedef struct
 	int			helpchanged;
 
 	qboolean	spectator;			// client is a spectator
+
+	int			XP;
+	int			Level;
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1091,5 +1094,8 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	int			XP;
+	int			Level;
 };
 
