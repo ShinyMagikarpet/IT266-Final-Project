@@ -794,6 +794,8 @@ BLASTER / HYPERBLASTER
 ======================================================================
 */
 
+
+
 void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, int effect)
 {
 	vec3_t	forward, right;
@@ -838,6 +840,8 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 }
+
+
 
 void Weapon_Blaster (edict_t *ent)
 {

@@ -1096,6 +1096,6 @@ struct edict_s
 	monsterinfo_t	monsterinfo;
 
 	int			XP;
-	int			Level;
+	int			playerLevel;
 };
 
