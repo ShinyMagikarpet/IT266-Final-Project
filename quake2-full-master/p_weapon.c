@@ -813,8 +813,9 @@ void Blaster_Fire (edict_t *ent, vec3_t g_offset, int damage, qboolean hyper, in
 	ent->client->kick_angles[0] = -1;
 
 	fire_blaster (ent, start, forward, damage, 1000, effect, hyper);
-	gi.bprintf(PRINT_HIGH, "Player Level is %i \n", ent->client->pers.Level);
-	gi.bprintf(PRINT_HIGH, "Player XP is %i \n", ent->client->pers.XP);
+	//gi.bprintf(PRINT_HIGH, "Player Level is %i \n", ent->client->pers.Level);
+	//gi.bprintf(PRINT_HIGH, "Player XP is %i \n", ent->client->pers.XP);
+	//gi.bprintf(PRINT_HIGH, "Blaster damage: %i\n", damage);
 
 	// send muzzle flash
 	gi.WriteByte (svc_muzzleflash);
@@ -836,9 +837,11 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	if (deathmatch->value)
 		damage = 15;
 	else
-		damage = 10;
+		damage = (10 * ent->client->pers.Level)  ;
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
+
+	
 }
 
 

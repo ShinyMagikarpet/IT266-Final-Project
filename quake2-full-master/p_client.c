@@ -588,6 +588,7 @@ but is called after each death and level change in deathmatch
 void InitClientPersistant (gclient_t *client)
 {
 	gitem_t		*item;
+	int			i;
 
 	memset (&client->pers, 0, sizeof(client->pers));
 
@@ -607,6 +608,19 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_slugs		= 50;
 	client->pers.Level			= 1; //Sets player level to 1 when game starts
 	client->pers.XP				= 0;//Sets player XP to 0 when game starts
+	client->pers.LEVELS[0]		= 0; //Shoddy level table
+	client->pers.LEVELS[1]		= 15;
+	client->pers.LEVELS[2]		= 30;
+	client->pers.LEVELS[3]		= 60;
+	client->pers.LEVELS[4]		= 90;
+	client->pers.LEVELS[5]		= 150;
+	client->pers.LEVELS[6]		= 210;
+	client->pers.LEVELS[7]		= 300;
+	client->pers.LEVELS[8]		= 360;
+	client->pers.LEVELS[9]		= 540;
+	client->pers.max_armor		= 100;
+	//client->pers.inventory[1]	= 50;
+	
 
 	client->pers.connected = true;
 
@@ -1734,6 +1748,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		other = g_edicts + i;
 		if (other->inuse && other->client->chase_target == ent)
 			UpdateChaseCam(other);
+	}
+
+	//Needs to be called less due to framerate
+	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor) {
+		ent->client->pers.inventory[1] += 1;
 	}
 }
 

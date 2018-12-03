@@ -1122,13 +1122,15 @@ mframe_t soldier_frames_death6 [] =
 };
 mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_death6, soldier_dead};
 
-void LevelPlayerUp(edict_t *ent) {
+void LevelPlayerUp(edict_t *ent, int playerLevel) {
 
-	int level2 = 30;
-	if (ent->client->pers.XP >= level2) {
-		ent->client->pers.Level = 2;
+	
+	if (ent->client->pers.XP >= ent->client->pers.LEVELS[playerLevel]) {
+		ent->client->pers.Level ++;
 		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
 	}
+	int xpToNext = (ent->client->pers.LEVELS[playerLevel + 1] - ent->client->pers.XP);
+	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n", xpToNext);
 }
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
@@ -1159,19 +1161,19 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Light"); //Test to see which character dies
 		gi.sound(self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
 		attacker->client->pers.XP += 15; //Passes XP to desired location, which in this case is player XP
-		LevelPlayerUp(attacker);
+		LevelPlayerUp(attacker, attacker->client->pers.Level);
 	}
 	else if (self->s.skinnum == 3) {
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
 		gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 		attacker->client->pers.XP += 15;
-		LevelPlayerUp(attacker);
+		LevelPlayerUp(attacker, attacker->client->pers.Level);
 	}
 	else { // (self->s.skinnum == 5)
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
 		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
 		attacker->client->pers.XP += 15;
-		LevelPlayerUp(attacker);
+		LevelPlayerUp(attacker, attacker->client->pers.Level);
 	}
 
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)

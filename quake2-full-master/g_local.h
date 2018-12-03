@@ -847,6 +847,8 @@ typedef struct
 
 	int			XP;
 	int			Level;
+	int			LEVELS[10];
+	int			max_armor;
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1097,5 +1099,6 @@ struct edict_s
 
 	int			XP;
 	int			playerLevel;
+	
 };
 
