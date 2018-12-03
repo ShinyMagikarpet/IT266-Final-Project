@@ -1575,6 +1575,9 @@ This will be called once for each client frame, which will
 usually be a couple times for each server frame.
 ==============
 */
+
+int hack = 0; //Comments below
+
 void ClientThink (edict_t *ent, usercmd_t *ucmd)
 {
 	gclient_t	*client;
@@ -1750,9 +1753,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			UpdateChaseCam(other);
 	}
 
+	hack++; //this is seriously a hack and I have no clue on a better solution
 	//Needs to be called less due to framerate
-	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor) {
+	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && hack == 24 ) {
 		ent->client->pers.inventory[1] += 1;
+		hack = 0;
 	}
 }
 

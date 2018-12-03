@@ -663,6 +663,7 @@ qboolean Pickup_Armor (edict_t *ent, edict_t *other)
 	if (!(ent->spawnflags & DROPPED_ITEM) && (deathmatch->value))
 		SetRespawn (ent, 20);
 
+	//sets max armor even when item picks up
 	if (other->client->pers.inventory[old_armor_index] >= other->client->pers.max_armor) {
 		other->client->pers.inventory[old_armor_index] = other->client->pers.max_armor;
 	}
