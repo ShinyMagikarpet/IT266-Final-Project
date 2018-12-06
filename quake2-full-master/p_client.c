@@ -596,8 +596,12 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.selected_item = ITEM_INDEX(item);
 	client->pers.inventory[client->pers.selected_item] = 1;
 
-	client->pers.weapon = item;
+	item = FindItem("Shotgun");
+	client->pers.selected_item = ITEM_INDEX(item);
+	client->pers.inventory[client->pers.selected_item] = 1;
 
+
+	client->pers.weapon = item;
 	client->pers.health			= 150;
 	client->pers.max_health		= 200;
 	client->pers.max_bullets	= 200;
@@ -620,6 +624,7 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.LEVELS[9]		= 540;
 	client->pers.max_armor		= 100;
 	//client->pers.inventory[1]	= 50;
+	client->pers.inventory[18]	= 69; //shotgun ammo
 	
 
 	client->pers.connected = true;
@@ -1755,10 +1760,12 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 
 	hack++; //this is seriously a hack and I have no clue on a better solution
 	//Needs to be called less due to framerate
-	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && hack == 24 ) {
+	float regenTime = level.time;
+	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && regenTime >= 10 ) {
 		ent->client->pers.inventory[1] += 1;
 		hack = 0;
 	}
+	//gi.bprintf(PRINT_HIGH, "Time: %f\n", regenTime);
 }
 
 

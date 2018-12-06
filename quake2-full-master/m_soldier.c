@@ -1135,7 +1135,9 @@ void LevelPlayerUp(edict_t *ent, int playerLevel) {
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
-	int		n;
+	int		n,mod;
+	char	*message;
+	char	*message2;
 
 // check for gib
 	if (self->health <= self->gib_health)
@@ -1174,6 +1176,83 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
 		attacker->client->pers.XP += 15;
 		LevelPlayerUp(attacker, attacker->client->pers.Level);
+	}
+
+	if (attacker && attacker->client)
+	{
+		switch (mod)
+		{
+		case MOD_BLASTER:
+			message = "was blasted by";
+			gi.bprintf(PRINT_HIGH, "Killed with Blaster\n");
+			break;
+		case MOD_SHOTGUN:
+			message = "was gunned down by";
+			gi.bprintf(PRINT_HIGH, "Killed with Shotgun\n");
+			break;
+		case MOD_SSHOTGUN:
+			message = "was blown away by";
+			message2 = "'s super shotgun";
+			break;
+		case MOD_MACHINEGUN:
+			message = "was machinegunned by";
+			break;
+		case MOD_CHAINGUN:
+			message = "was cut in half by";
+			message2 = "'s chaingun";
+			break;
+		case MOD_GRENADE:
+			message = "was popped by";
+			message2 = "'s grenade";
+			break;
+		case MOD_G_SPLASH:
+			message = "was shredded by";
+			message2 = "'s shrapnel";
+			break;
+		case MOD_ROCKET:
+			message = "ate";
+			message2 = "'s rocket";
+			break;
+		case MOD_R_SPLASH:
+			message = "almost dodged";
+			message2 = "'s rocket";
+			break;
+		case MOD_HYPERBLASTER:
+			message = "was melted by";
+			message2 = "'s hyperblaster";
+			break;
+		case MOD_RAILGUN:
+			message = "was railed by";
+			break;
+		case MOD_BFG_LASER:
+			message = "saw the pretty lights from";
+			message2 = "'s BFG";
+			break;
+		case MOD_BFG_BLAST:
+			message = "was disintegrated by";
+			message2 = "'s BFG blast";
+			break;
+		case MOD_BFG_EFFECT:
+			message = "couldn't hide from";
+			message2 = "'s BFG";
+			break;
+		case MOD_HANDGRENADE:
+			message = "caught";
+			message2 = "'s handgrenade";
+			break;
+		case MOD_HG_SPLASH:
+			message = "didn't see";
+			message2 = "'s handgrenade";
+			break;
+		case MOD_HELD_GRENADE:
+			message = "feels";
+			message2 = "'s pain";
+			break;
+		case MOD_TELEFRAG:
+			message = "tried to invade";
+			message2 = "'s personal space";
+			break;
+		}
 	}
 
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)
