@@ -1122,62 +1122,7 @@ mframe_t soldier_frames_death6 [] =
 };
 mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_death6, soldier_dead};
 
-void LevelPlayerUp(edict_t *ent, int XP) {
 
-	ent->client->pers.playerXP += XP;
-	//New and improved version of level check that now loops through
-	//the array as the player may get more xp than target level!!!
-	int playerLevel = ent->client->pers.playerLevel;
-	while (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
-		ent->client->pers.playerLevel++;
-		playerLevel++;
-		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
-	}
-	
-	//Old inferior version of level check!!!
-	/*
-	if (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
-		ent->client->pers.playerLevel ++;
-		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
-		gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
-	}
-	*/
-	gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
-	int xpToNext = (ent->client->pers.LEVELS[playerLevel + 1] - ent->client->pers.playerXP);
-	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n", xpToNext);
-}
-
-void MonsterObituary(edict_t *ent, int mod, int XP) {
-
-	switch (mod)
-	{
-	case MOD_BLASTER:
-		gi.bprintf(PRINT_HIGH, "Killed with Blaster\n");
-		ent->client->pers.blasterXP += XP;
-		break;
-	case MOD_SHOTGUN:
-		gi.bprintf(PRINT_HIGH, "Killed with Shotgun\n");
-		ent->client->pers.shotgunXP += XP;
-		break;
-	case MOD_SSHOTGUN:
-		gi.bprintf(PRINT_HIGH, "Killed with Super Shotgun\n");
-		break;
-	case MOD_MACHINEGUN:
-		gi.bprintf(PRINT_HIGH, "Killed with Machinegun\n");
-		break;
-	case MOD_CHAINGUN:
-		gi.bprintf(PRINT_HIGH, "Killed with Chaingun\n");
-		break;
-	case MOD_R_SPLASH:
-		gi.bprintf(PRINT_HIGH, "Killed with Rocket Splash\n");
-		break;
-	case MOD_HYPERBLASTER:
-		gi.bprintf(PRINT_HIGH, "Killed with Hyperblaster\n");
-		break;
-	default:
-		gi.dprintf("LUL something is wrong\n");
-	}
-}
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {

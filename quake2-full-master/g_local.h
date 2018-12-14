@@ -583,6 +583,7 @@ extern	gitem_t	itemlist[];
 //
 void Cmd_Help_f (edict_t *ent);
 void Cmd_Score_f (edict_t *ent);
+void Cmd_GetXp_f(edict_t *ent);
 
 //
 // g_items.c
@@ -845,10 +846,19 @@ typedef struct
 
 	qboolean	spectator;			// client is a spectator
 
-	int			XP;
-	int			Level;
+	int			playerXP;
+	int			playerLevel;
 	int			LEVELS[10];
 	int			max_armor;
+	int			blasterLevel;
+	int			blasterXP;
+	int			shotgunLevel;
+	int			shotgunXP;
+	int			swordLevel;
+	int			swordXP;
+	int			machinegunLevel;
+	int			machinegunXP;
+
 } client_persistant_t;
 
 // client data that stays across deathmatch respawns
@@ -1096,6 +1106,8 @@ struct edict_s
 	// common data blocks
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
+
+	int modWeapon;
 	
 };
 
