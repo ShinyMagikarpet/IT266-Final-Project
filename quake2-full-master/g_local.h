@@ -238,7 +238,11 @@ typedef struct gitem_s
 	void		*info;
 	int			tag;
 
+	int			XP; // total xp of weapon
+	int			level; //Level of weapon
+
 	char		*precaches;		// string of all models, sounds, and images this item will use
+
 } gitem_t;
 
 

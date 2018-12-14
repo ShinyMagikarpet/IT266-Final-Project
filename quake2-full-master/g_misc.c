@@ -1888,6 +1888,7 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n", xpToNext);
 }
 
+
 void MonsterObituary(edict_t *ent, int mod, int XP) {
 
 	switch (mod)
@@ -1898,7 +1899,7 @@ void MonsterObituary(edict_t *ent, int mod, int XP) {
 		break;
 	case MOD_SHOTGUN:
 		gi.bprintf(PRINT_HIGH, "Killed with Shotgun\n");
-		ent->client->pers.shotgunXP += XP;
+		ent->client->pers.weapon->XP += XP;
 		break;
 	case MOD_SSHOTGUN:
 		gi.bprintf(PRINT_HIGH, "Killed with Super Shotgun\n");
@@ -1919,5 +1920,8 @@ void MonsterObituary(edict_t *ent, int mod, int XP) {
 	default:
 		gi.dprintf("LUL something is wrong\n");
 	}
+
+	gi.bprintf(PRINT_HIGH,"You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
+	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
 }
 

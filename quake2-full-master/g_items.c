@@ -1149,6 +1149,8 @@ gitem_t	itemlist[] =
 		0,
 		&bodyarmor_info,
 		ARMOR_BODY,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1317,6 +1319,8 @@ always owned, never in the world
 		WEAP_SHOTGUN,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/shotgf1b.wav weapons/shotgr1b.wav"
 	},
 
