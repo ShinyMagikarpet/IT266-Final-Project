@@ -1889,8 +1889,9 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 }
 
 
-void MonsterObituary(edict_t *ent, int mod, int XP) {
+void LevelWeaponUp(edict_t *ent, int mod, int XP) {
 
+	/* This was my old method however I found a much more reliable and cleaner way to give weapon xp
 	switch (mod)
 	{
 	case MOD_BLASTER:
@@ -1920,6 +1921,9 @@ void MonsterObituary(edict_t *ent, int mod, int XP) {
 	default:
 		gi.dprintf("LUL something is wrong\n");
 	}
+	*/
+
+	ent->client->pers.weapon->XP += XP;
 
 	gi.bprintf(PRINT_HIGH,"You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
 	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);

@@ -1167,7 +1167,7 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 
 	mod = inflictor->modWeapon;
 	LevelPlayerUp(attacker, xpVal);
-	MonsterObituary(attacker, mod, xpVal);
+	LevelWeaponUp(attacker, mod, xpVal);
 
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)
 	{

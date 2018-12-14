@@ -1174,6 +1174,8 @@ gitem_t	itemlist[] =
 		0,
 		&combatarmor_info,
 		ARMOR_COMBAT,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1197,6 +1199,8 @@ gitem_t	itemlist[] =
 		0,
 		&jacketarmor_info,
 		ARMOR_JACKET,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1220,6 +1224,8 @@ gitem_t	itemlist[] =
 		0,
 		NULL,
 		ARMOR_SHARD,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1244,6 +1250,8 @@ gitem_t	itemlist[] =
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1267,6 +1275,8 @@ gitem_t	itemlist[] =
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "misc/power2.wav misc/power1.wav"
 	},
 
@@ -1296,6 +1306,8 @@ always owned, never in the world
 		WEAP_BLASTER,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/blastf1a.wav misc/lasfly.wav"
 	},
 
@@ -1344,6 +1356,8 @@ always owned, never in the world
 		WEAP_SUPERSHOTGUN,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/sshotf1b.wav"
 	},
 
@@ -1367,6 +1381,8 @@ always owned, never in the world
 		WEAP_MACHINEGUN,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/machgf1b.wav weapons/machgf2b.wav weapons/machgf3b.wav weapons/machgf4b.wav weapons/machgf5b.wav"
 	},
 
@@ -1390,6 +1406,8 @@ always owned, never in the world
 		WEAP_CHAINGUN,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/chngnu1a.wav weapons/chngnl1a.wav weapons/machgf3b.wav` weapons/chngnd1a.wav"
 	},
 
@@ -1413,6 +1431,8 @@ always owned, never in the world
 		WEAP_GRENADES,
 		NULL,
 		AMMO_GRENADES,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "weapons/hgrent1a.wav weapons/hgrena1b.wav weapons/hgrenc1b.wav weapons/hgrenb1a.wav weapons/hgrenb2a.wav "
 	},
 
@@ -1436,6 +1456,8 @@ always owned, never in the world
 		WEAP_GRENADELAUNCHER,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "models/objects/grenade/tris.md2 weapons/grenlf1a.wav weapons/grenlr1b.wav weapons/grenlb1b.wav"
 	},
 
@@ -1459,6 +1481,8 @@ always owned, never in the world
 		WEAP_ROCKETLAUNCHER,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "models/objects/rocket/tris.md2 weapons/rockfly.wav weapons/rocklf1a.wav weapons/rocklr1b.wav models/objects/debris2/tris.md2"
 	},
 
@@ -1482,6 +1506,8 @@ always owned, never in the world
 		WEAP_HYPERBLASTER,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/hyprbu1a.wav weapons/hyprbl1a.wav weapons/hyprbf1a.wav weapons/hyprbd1a.wav misc/lasfly.wav"
 	},
 
@@ -1505,6 +1531,8 @@ always owned, never in the world
 		WEAP_RAILGUN,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "weapons/rg_hum.wav"
 	},
 
@@ -1528,6 +1556,8 @@ always owned, never in the world
 		WEAP_BFG,
 		NULL,
 		0,
+		0, //XP
+		1, //Level
 /* precache */ "sprites/s_bfg1.sp2 sprites/s_bfg2.sp2 sprites/s_bfg3.sp2 weapons/bfg__f1y.wav weapons/bfg__l1a.wav weapons/bfg__x1b.wav weapons/bfg_hum.wav"
 	},
 
@@ -1555,6 +1585,8 @@ always owned, never in the world
 		0,
 		NULL,
 		AMMO_SHELLS,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1578,6 +1610,8 @@ always owned, never in the world
 		0,
 		NULL,
 		AMMO_BULLETS,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1601,6 +1635,8 @@ always owned, never in the world
 		0,
 		NULL,
 		AMMO_CELLS,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1624,6 +1660,8 @@ always owned, never in the world
 		0,
 		NULL,
 		AMMO_ROCKETS,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1647,6 +1685,8 @@ always owned, never in the world
 		0,
 		NULL,
 		AMMO_SLUGS,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1674,6 +1714,8 @@ always owned, never in the world
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "items/damage.wav items/damage2.wav items/damage3.wav"
 	},
 
@@ -1697,6 +1739,8 @@ always owned, never in the world
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "items/protect.wav items/protect2.wav items/protect4.wav"
 	},
 
@@ -1720,6 +1764,8 @@ always owned, never in the world
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1743,6 +1789,8 @@ always owned, never in the world
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "items/airout.wav"
 	},
 
@@ -1766,6 +1814,8 @@ always owned, never in the world
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "items/airout.wav"
 	},
 
@@ -1790,6 +1840,8 @@ Special item that gives +2 to maximum health
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1814,6 +1866,8 @@ gives +1 to maximum health
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1837,6 +1891,8 @@ gives +1 to maximum health
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1860,6 +1916,8 @@ gives +1 to maximum health
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1887,6 +1945,8 @@ key for computer centers
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1911,6 +1971,8 @@ warehouse circuits
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1935,6 +1997,8 @@ key for the entrance of jail3
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1959,6 +2023,8 @@ key for the city computer
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -1983,6 +2049,8 @@ security pass for the security level
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -2007,6 +2075,8 @@ normal door key - blue
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -2031,6 +2101,8 @@ normal door key - red
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -2055,6 +2127,8 @@ tank commander's head
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -2079,6 +2153,8 @@ tank commander's head
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ ""
 	},
 
@@ -2100,6 +2176,8 @@ tank commander's head
 		0,
 		NULL,
 		0,
+		NULL, //XP
+		NULL,//LEVEL
 /* precache */ "items/s_health.wav items/n_health.wav items/l_health.wav items/m_health.wav"
 	},
 
