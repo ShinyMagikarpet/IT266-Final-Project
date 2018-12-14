@@ -381,8 +381,6 @@ void ClientObituary (edict_t *self, edict_t *inflictor, edict_t *attacker)
 	}
 
 	gi.bprintf (PRINT_MEDIUM,"%s died.\n", self->client->pers.netname);
-	if (deathmatch->value)
-		self->client->resp.score--;
 }
 
 
@@ -520,7 +518,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 			self->client->pers.inventory[n] = 0;
 		}
 	}
-
+	
 	// remove powerups
 	self->client->quad_framenum = 0;
 	self->client->invincible_framenum = 0;
@@ -600,6 +598,10 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.selected_item = ITEM_INDEX(item);
 	client->pers.inventory[client->pers.selected_item] = 1;
 
+	item = FindItem("Railgun");
+	client->pers.selected_item = ITEM_INDEX(item);
+	client->pers.inventory[client->pers.selected_item] = 1;
+
 
 	client->pers.weapon = item;
 	client->pers.health			= 150;
@@ -609,9 +611,18 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_rockets	= 50;
 	client->pers.max_grenades	= 50;
 	client->pers.max_cells		= 200;
-	client->pers.max_slugs		= 50;
-	client->pers.Level			= 1; //Sets player level to 1 when game starts
-	client->pers.XP				= 0;//Sets player XP to 0 when game starts
+	client->pers.max_slugs		= 100; //was set to 50
+
+	client->pers.playerLevel	= 1; //Sets player level to 1 when game starts
+	client->pers.playerXP		= 0;//Sets player XP to 0 when game starts
+	client->pers.blasterLevel	= 1;
+	client->pers.blasterXP		= 0;
+	client->pers.shotgunLevel	= 1;
+	client->pers.shotgunXP		= 0;
+	client->pers.swordLevel		= 1;
+	client->pers.swordXP		= 0;
+	client->pers.machinegunLevel = 1;//Eye candy for the OCD
+	client->pers.machinegunXP	= 0;
 	client->pers.LEVELS[0]		= 0; //Shoddy level table
 	client->pers.LEVELS[1]		= 15;
 	client->pers.LEVELS[2]		= 30;
@@ -623,8 +634,9 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.LEVELS[8]		= 360;
 	client->pers.LEVELS[9]		= 540;
 	client->pers.max_armor		= 100;
-	//client->pers.inventory[1]	= 50;
+	//client->pers.inventory[1]	= 50; //armor value	
 	client->pers.inventory[18]	= 69; //shotgun ammo
+	client->pers.inventory[22]	= 69; //railgun ammo
 	
 
 	client->pers.connected = true;
@@ -1581,9 +1593,8 @@ usually be a couple times for each server frame.
 ==============
 */
 
-int hack = 0; //Comments below
 
-void ClientThink (edict_t *ent, usercmd_t *ucmd)
+void ClientThink(edict_t *ent, usercmd_t *ucmd)
 {
 	gclient_t	*client;
 	edict_t	*other;
@@ -1597,8 +1608,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 	{
 		client->ps.pmove.pm_type = PM_FREEZE;
 		// can exit intermission after five seconds
-		if (level.time > level.intermissiontime + 5.0 
-			&& (ucmd->buttons & BUTTON_ANY) )
+		if (level.time > level.intermissiontime + 5.0
+			&& (ucmd->buttons & BUTTON_ANY))
 			level.exitintermission = true;
 		return;
 	}
@@ -1611,10 +1622,11 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
 
-	} else {
+	}
+	else {
 
 		// set up for pmove
-		memset (&pm, 0, sizeof(pm));
+		memset(&pm, 0, sizeof(pm));
 
 		if (ent->movetype == MOVETYPE_NOCLIP)
 			client->ps.pmove.pm_type = PM_SPECTATOR;
@@ -1628,16 +1640,16 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		client->ps.pmove.gravity = sv_gravity->value;
 		pm.s = client->ps.pmove;
 
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 		{
-			pm.s.origin[i] = ent->s.origin[i]*8;
-			pm.s.velocity[i] = ent->velocity[i]*8;
+			pm.s.origin[i] = ent->s.origin[i] * 8;
+			pm.s.velocity[i] = ent->velocity[i] * 8;
 		}
 
 		if (memcmp(&client->old_pmove, &pm.s, sizeof(pm.s)))
 		{
 			pm.snapinitial = true;
-	//		gi.dprintf ("pmove changed!\n");
+			//		gi.dprintf ("pmove changed!\n");
 		}
 
 		pm.cmd = *ucmd;
@@ -1646,20 +1658,20 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		pm.pointcontents = gi.pointcontents;
 
 		// perform a pmove
-		gi.Pmove (&pm);
+		gi.Pmove(&pm);
 
 		// save results of pmove
 		client->ps.pmove = pm.s;
 		client->old_pmove = pm.s;
 
-		for (i=0 ; i<3 ; i++)
+		for (i = 0; i < 3; i++)
 		{
-			ent->s.origin[i] = pm.s.origin[i]*0.125;
-			ent->velocity[i] = pm.s.velocity[i]*0.125;
+			ent->s.origin[i] = pm.s.origin[i] * 0.125;
+			ent->velocity[i] = pm.s.velocity[i] * 0.125;
 		}
 
-		VectorCopy (pm.mins, ent->mins);
-		VectorCopy (pm.maxs, ent->maxs);
+		VectorCopy(pm.mins, ent->mins);
+		VectorCopy(pm.maxs, ent->maxs);
 
 		client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
@@ -1686,27 +1698,27 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 		}
 		else
 		{
-			VectorCopy (pm.viewangles, client->v_angle);
-			VectorCopy (pm.viewangles, client->ps.viewangles);
+			VectorCopy(pm.viewangles, client->v_angle);
+			VectorCopy(pm.viewangles, client->ps.viewangles);
 		}
 
-		gi.linkentity (ent);
+		gi.linkentity(ent);
 
 		if (ent->movetype != MOVETYPE_NOCLIP)
-			G_TouchTriggers (ent);
+			G_TouchTriggers(ent);
 
 		// touch other objects
-		for (i=0 ; i<pm.numtouch ; i++)
+		for (i = 0; i < pm.numtouch; i++)
 		{
 			other = pm.touchents[i];
-			for (j=0 ; j<i ; j++)
+			for (j = 0; j < i; j++)
 				if (pm.touchents[j] == other)
 					break;
 			if (j != i)
 				continue;	// duplicated
 			if (!other->touch)
 				continue;
-			other->touch (other, ent, NULL, NULL);
+			other->touch(other, ent, NULL, NULL);
 		}
 
 	}
@@ -1729,12 +1741,14 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			if (client->chase_target) {
 				client->chase_target = NULL;
 				client->ps.pmove.pm_flags &= ~PMF_NO_PREDICTION;
-			} else
+			}
+			else
 				GetChaseTarget(ent);
 
-		} else if (!client->weapon_thunk) {
+		}
+		else if (!client->weapon_thunk) {
 			client->weapon_thunk = true;
-			Think_Weapon (ent);
+			Think_Weapon(ent);
 		}
 	}
 
@@ -1747,7 +1761,8 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 				else
 					GetChaseTarget(ent);
 			}
-		} else
+		}
+		else
 			client->ps.pmove.pm_flags &= ~PMF_JUMP_HELD;
 	}
 
@@ -1758,14 +1773,26 @@ void ClientThink (edict_t *ent, usercmd_t *ucmd)
 			UpdateChaseCam(other);
 	}
 
-	hack++; //this is seriously a hack and I have no clue on a better solution
-	//Needs to be called less due to framerate
 	float regenTime = level.time;
-	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && regenTime >= 10 ) {
+	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && regenTime >= 10) {
 		ent->client->pers.inventory[1] += 1;
-		hack = 0;
 	}
 	//gi.bprintf(PRINT_HIGH, "Time: %f\n", regenTime);
+
+
+	//Code to check if the player is crouching!!!
+	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED && ent->client->ps.pmove.pm_flags & PMF_JUMP_HELD) {
+		gi.dprintf("did you fucking bullet jump???\n");
+	}
+
+
+
+	//Bullet jump should be as follows:
+	//If couching && command jump = perform bullet jump
+	//If moving && command crouch = slide
+	//If sliding && command jump = perform bullet jump
+	//All code will probably go here as it should override other commands
+
 }
 
 

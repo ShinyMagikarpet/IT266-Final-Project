@@ -1122,22 +1122,67 @@ mframe_t soldier_frames_death6 [] =
 };
 mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_death6, soldier_dead};
 
-void LevelPlayerUp(edict_t *ent, int playerLevel) {
+void LevelPlayerUp(edict_t *ent, int XP) {
 
-	
-	if (ent->client->pers.XP >= ent->client->pers.LEVELS[playerLevel]) {
-		ent->client->pers.Level ++;
+	ent->client->pers.playerXP += XP;
+	//New and improved version of level check that now loops through
+	//the array as the player may get more xp than target level!!!
+	int playerLevel = ent->client->pers.playerLevel;
+	while (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
+		ent->client->pers.playerLevel++;
+		playerLevel++;
 		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
 	}
-	int xpToNext = (ent->client->pers.LEVELS[playerLevel + 1] - ent->client->pers.XP);
+	
+	//Old inferior version of level check!!!
+	/*
+	if (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
+		ent->client->pers.playerLevel ++;
+		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
+		gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
+	}
+	*/
+	gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
+	int xpToNext = (ent->client->pers.LEVELS[playerLevel + 1] - ent->client->pers.playerXP);
 	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n", xpToNext);
+}
+
+void MonsterObituary(edict_t *ent, int mod, int XP) {
+
+	switch (mod)
+	{
+	case MOD_BLASTER:
+		gi.bprintf(PRINT_HIGH, "Killed with Blaster\n");
+		ent->client->pers.blasterXP += XP;
+		break;
+	case MOD_SHOTGUN:
+		gi.bprintf(PRINT_HIGH, "Killed with Shotgun\n");
+		ent->client->pers.shotgunXP += XP;
+		break;
+	case MOD_SSHOTGUN:
+		gi.bprintf(PRINT_HIGH, "Killed with Super Shotgun\n");
+		break;
+	case MOD_MACHINEGUN:
+		gi.bprintf(PRINT_HIGH, "Killed with Machinegun\n");
+		break;
+	case MOD_CHAINGUN:
+		gi.bprintf(PRINT_HIGH, "Killed with Chaingun\n");
+		break;
+	case MOD_R_SPLASH:
+		gi.bprintf(PRINT_HIGH, "Killed with Rocket Splash\n");
+		break;
+	case MOD_HYPERBLASTER:
+		gi.bprintf(PRINT_HIGH, "Killed with Hyperblaster\n");
+		break;
+	default:
+		gi.dprintf("LUL something is wrong\n");
+	}
 }
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
-	int		n,mod;
-	char	*message;
-	char	*message2;
+	int		n, mod, xpVal;
+
 
 // check for gib
 	if (self->health <= self->gib_health)
@@ -1162,98 +1207,22 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	if (self->s.skinnum == 1) {
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Light"); //Test to see which character dies
 		gi.sound(self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
-		attacker->client->pers.XP += 15; //Passes XP to desired location, which in this case is player XP
-		LevelPlayerUp(attacker, attacker->client->pers.Level);
+		xpVal = 15;
 	}
 	else if (self->s.skinnum == 3) {
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
 		gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
-		attacker->client->pers.XP += 15;
-		LevelPlayerUp(attacker, attacker->client->pers.Level);
+		xpVal = 30;
 	}
 	else { // (self->s.skinnum == 5)
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
 		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
-		attacker->client->pers.XP += 15;
-		LevelPlayerUp(attacker, attacker->client->pers.Level);
+		xpVal = 45;
 	}
 
-	if (attacker && attacker->client)
-	{
-		switch (mod)
-		{
-		case MOD_BLASTER:
-			message = "was blasted by";
-			gi.bprintf(PRINT_HIGH, "Killed with Blaster\n");
-			break;
-		case MOD_SHOTGUN:
-			message = "was gunned down by";
-			gi.bprintf(PRINT_HIGH, "Killed with Shotgun\n");
-			break;
-		case MOD_SSHOTGUN:
-			message = "was blown away by";
-			message2 = "'s super shotgun";
-			break;
-		case MOD_MACHINEGUN:
-			message = "was machinegunned by";
-			break;
-		case MOD_CHAINGUN:
-			message = "was cut in half by";
-			message2 = "'s chaingun";
-			break;
-		case MOD_GRENADE:
-			message = "was popped by";
-			message2 = "'s grenade";
-			break;
-		case MOD_G_SPLASH:
-			message = "was shredded by";
-			message2 = "'s shrapnel";
-			break;
-		case MOD_ROCKET:
-			message = "ate";
-			message2 = "'s rocket";
-			break;
-		case MOD_R_SPLASH:
-			message = "almost dodged";
-			message2 = "'s rocket";
-			break;
-		case MOD_HYPERBLASTER:
-			message = "was melted by";
-			message2 = "'s hyperblaster";
-			break;
-		case MOD_RAILGUN:
-			message = "was railed by";
-			break;
-		case MOD_BFG_LASER:
-			message = "saw the pretty lights from";
-			message2 = "'s BFG";
-			break;
-		case MOD_BFG_BLAST:
-			message = "was disintegrated by";
-			message2 = "'s BFG blast";
-			break;
-		case MOD_BFG_EFFECT:
-			message = "couldn't hide from";
-			message2 = "'s BFG";
-			break;
-		case MOD_HANDGRENADE:
-			message = "caught";
-			message2 = "'s handgrenade";
-			break;
-		case MOD_HG_SPLASH:
-			message = "didn't see";
-			message2 = "'s handgrenade";
-			break;
-		case MOD_HELD_GRENADE:
-			message = "feels";
-			message2 = "'s pain";
-			break;
-		case MOD_TELEFRAG:
-			message = "tried to invade";
-			message2 = "'s personal space";
-			break;
-		}
-	}
+	mod = inflictor->modWeapon;
+	LevelPlayerUp(attacker, xpVal);
+	MonsterObituary(attacker, mod, xpVal);
 
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)
 	{

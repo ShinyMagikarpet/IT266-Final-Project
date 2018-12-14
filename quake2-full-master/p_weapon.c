@@ -837,7 +837,7 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	if (deathmatch->value)
 		damage = 15;
 	else
-		damage = (10 * ent->client->pers.Level)  ;
+		damage = (10 * ent->client->pers.blasterLevel)  ; //Applying level to damage
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 
@@ -1333,6 +1333,8 @@ void weapon_railgun_fire (edict_t *ent)
 
 	ent->client->ps.gunframe++;
 	PlayerNoise(ent, start, PNOISE_WEAPON);
+
+	//gi.bprintf(PRINT_HIGH, "MOD index: %i\n", ent->modWeapon);
 
 	if (! ( (int)dmflags->value & DF_INFINITE_AMMO ) )
 		ent->client->pers.inventory[ent->client->ammo_index]--;
