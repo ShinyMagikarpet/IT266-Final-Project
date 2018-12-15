@@ -852,16 +852,8 @@ typedef struct
 
 	int			playerXP;
 	int			playerLevel;
-	int			LEVELS[10];
+	int			LEVELS[30];
 	int			max_armor;
-	int			blasterLevel;
-	int			blasterXP;
-	int			shotgunLevel;
-	int			shotgunXP;
-	int			swordLevel;
-	int			swordXP;
-	int			machinegunLevel;
-	int			machinegunXP;
 
 } client_persistant_t;
 

@@ -1863,17 +1863,30 @@ void SP_misc_teleporter_dest (edict_t *ent)
 Dembner Func
 =================
 */
+
+int XPtable(int level) { //XP table
+	
+	return round((4 * pow(level, 3)) / 5);
+
+}
+
 void LevelPlayerUp(edict_t *ent, int XP) {
 
+	qboolean didLevelUp = false;
 	ent->client->pers.playerXP += XP;
 	//New and improved version of level check that now loops through
 	//the array as the player may get more xp than target level!!!
 	int playerLevel = ent->client->pers.playerLevel;
-	while (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
+	while (ent->client->pers.playerXP >= XPtable(playerLevel)) {
 		ent->client->pers.playerLevel++;
 		playerLevel++;
+		didLevelUp = true;
+	}
+
+	if (didLevelUp) {
 		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
 	}
+	
 
 	//Old inferior version of level check!!!
 	/*
@@ -1884,8 +1897,8 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 	}
 	*/
 	gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
-	int xpToNext = (ent->client->pers.LEVELS[playerLevel + 1] - ent->client->pers.playerXP);
-	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n", xpToNext);
+	int xpToNext = XPtable(playerLevel++) - ent->client->pers.playerXP;
+	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n \n", xpToNext);
 }
 
 
@@ -1924,8 +1937,24 @@ void LevelWeaponUp(edict_t *ent, int mod, int XP) {
 	*/
 
 	ent->client->pers.weapon->XP += XP;
+	qboolean didLevelUp = false;
+
+	int weaponLevel = ent->client->pers.weapon->level;
+	while (ent->client->pers.playerXP >= XPtable(weaponLevel)) {
+		ent->client->pers.weapon->level++;
+		weaponLevel++;
+		didLevelUp = true;
+	}
+
+	if (didLevelUp) {
+		gi.bprintf(PRINT_HIGH, "The Weapon has leveled up!\n");
+	}
+
+
 
 	gi.bprintf(PRINT_HIGH,"You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
-	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
+	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n \n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
 }
+
+
 

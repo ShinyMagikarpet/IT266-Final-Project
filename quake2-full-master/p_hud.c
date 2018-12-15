@@ -294,6 +294,10 @@ void HelpComputer (edict_t *ent)
 	else
 		sk = "hard+";
 
+	gitem_t *blaster = &itemlist[7];
+	gitem_t *shotgun = &itemlist[8];
+	
+
 	// send the layout
 	Com_sprintf (string, sizeof(string),
 		"xv 32 yv 8 picn help "			// background
@@ -302,18 +306,24 @@ void HelpComputer (edict_t *ent)
 		"xv 0 yv 54 cstring2 \"%s\" "		// help 1
 		"xv 0 yv 110 cstring2 \"%s\" "		// help 2
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
-		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" ", 
+		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" "
+		"xv 350 yv 12 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
+		"xv 350 yv 24 string2 \"Shotgun    %i         %i\" "
+		"xv 350 yv 32 string2 \"Blaster    %i         %i\" ", //Getting values
 		sk,
 		level.level_name,
 		game.helpmessage1,
 		game.helpmessage2,
 		level.killed_monsters, level.total_monsters, 
 		level.found_goals, level.total_goals,
-		level.found_secrets, level.total_secrets);
+		level.found_secrets, level.total_secrets,
+		shotgun->level, shotgun->XP,
+		blaster->level, blaster->XP);
 
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);
 	gi.unicast (ent, true);
+
 }
 
 

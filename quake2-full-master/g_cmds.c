@@ -849,8 +849,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 
-	gi.cprintf(ent, PRINT_HIGH, "Blaster xp: %i\n", ent->client->pers.blasterXP);
-	gi.cprintf(ent, PRINT_HIGH, "Shotgun xp: %i\n", ent->client->pers.shotgunXP);
+	gi.bprintf(PRINT_HIGH, "Current weapon XP: %i.\n", ent->client->pers.weapon->XP);
 }
 
 void Cmd_PlayerList_f(edict_t *ent)
@@ -892,15 +891,7 @@ void Cmd_Get_Level_f(edict_t *ent) {
 
 }
 
-/*
-Get XP of stuff
-*/
-void Cmd_GetXp_f(edict_t *ent) {
 
-	gi.cprintf(ent, PRINT_HIGH, "Blaster xp: %i\n", ent->client->pers.blasterXP);
-	gi.cprintf(ent, PRINT_HIGH, "Shotgun xp: %i\n", ent->client->pers.shotgunXP);
-
-}
 
 
 /*

@@ -575,6 +575,7 @@ void player_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 
 //=======================================================================
 
+
 /*
 ==============
 InitClientPersistant
@@ -611,14 +612,7 @@ void InitClientPersistant (gclient_t *client)
 
 	client->pers.playerLevel	= 1; //Sets player level to 1 when game starts
 	client->pers.playerXP		= 0;//Sets player XP to 0 when game starts
-	client->pers.blasterLevel	= 1;
-	client->pers.blasterXP		= 0;
-	client->pers.shotgunLevel	= 1;
-	client->pers.shotgunXP		= 0;
-	client->pers.swordLevel		= 1;
-	client->pers.swordXP		= 0;
-	client->pers.machinegunLevel = 1;//Eye candy for the OCD
-	client->pers.machinegunXP	= 0;
+	/*
 	client->pers.LEVELS[0]		= 0; //Shoddy level table
 	client->pers.LEVELS[1]		= 15;
 	client->pers.LEVELS[2]		= 30;
@@ -629,6 +623,7 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.LEVELS[7]		= 300;
 	client->pers.LEVELS[8]		= 360;
 	client->pers.LEVELS[9]		= 540;
+	*/
 	client->pers.max_armor		= 100;
 	//client->pers.inventory[1]	= 50; //armor value	
 	client->pers.inventory[18]	= 69; //shotgun ammo

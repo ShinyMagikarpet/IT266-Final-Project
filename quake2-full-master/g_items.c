@@ -1285,7 +1285,7 @@ gitem_t	itemlist[] =
 	// WEAPONS 
 	//
 
-/* weapon_blaster (.3 .3 1) (-16 -16 -16) (16 16 16)
+/* weapon_blaster (.3 .3 1) (-16 -16 -16) (16 16 16) //blaster is 7
 always owned, never in the world
 */
 	{
