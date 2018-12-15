@@ -273,6 +273,12 @@ void Cmd_Score_f (edict_t *ent)
 }
 
 
+int XPtable2(int level) { //XP table - Dembner
+
+	return round((4 * pow(level, 3)) / 5);
+
+}
+
 /*
 ==================
 HelpComputer
@@ -308,8 +314,8 @@ void HelpComputer (edict_t *ent)
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
 		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" "
 		"xv 350 yv 12 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
-		"xv 350 yv 24 string2 \"Shotgun    %i         %i\" "
-		"xv 350 yv 32 string2 \"Blaster    %i         %i\" ", //Getting values
+		"xv 350 yv 24 string2 \"Shotgun    %i         %i      %i\" "
+		"xv 350 yv 32 string2 \"Blaster    %i         %i      %i\" ", //Getting values
 		sk,
 		level.level_name,
 		game.helpmessage1,
@@ -317,13 +323,13 @@ void HelpComputer (edict_t *ent)
 		level.killed_monsters, level.total_monsters, 
 		level.found_goals, level.total_goals,
 		level.found_secrets, level.total_secrets,
-		shotgun->level, shotgun->XP,
-		blaster->level, blaster->XP);
+		shotgun->level, shotgun->XP, XPtable2(shotgun->level) - shotgun->XP,
+		blaster->level, blaster->XP, XPtable2(blaster->level) - blaster->XP);
 
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);
 	gi.unicast (ent, true);
-
+	
 }
 
 
