@@ -302,10 +302,14 @@ void HelpComputer (edict_t *ent)
 
 	gitem_t *blaster = &itemlist[7];
 	gitem_t *shotgun = &itemlist[8];
+	int playerLevel, playerXP;
+	playerLevel = ent->client->pers.playerLevel;
+	playerXP = ent->client->pers.playerXP;
 	
 
 	// send the layout
 	Com_sprintf (string, sizeof(string),
+		/*
 		"xv 32 yv 8 picn help "			// background
 		"xv 202 yv 12 string2 \"%s\" "		// skill
 		"xv 0 yv 24 cstring2 \"%s\" "		// level name
@@ -313,16 +317,20 @@ void HelpComputer (edict_t *ent)
 		"xv 0 yv 110 cstring2 \"%s\" "		// help 2
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
 		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" "
-		"xv 350 yv 12 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
-		"xv 350 yv 24 string2 \"Shotgun    %i         %i     %2i\" "
-		"xv 350 yv 32 string2 \"Blaster    %i         %i     %2i\" ", //Getting values
-		sk,
-		level.level_name,
-		game.helpmessage1,
-		game.helpmessage2,
-		level.killed_monsters, level.total_monsters, 
-		level.found_goals, level.total_goals,
-		level.found_secrets, level.total_secrets,
+		*/
+		"xv 0 yv 0 string2 \"Player     Level     XP     ToNextLvl     \" "
+		"xv 0 yv 12 string2 \"           %i         %3i      %3i     \" "
+		"xv 0 yv 32 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
+		"xv 0 yv 44 string2 \"Shotgun    %i         %3i     %3i\" "
+		"xv 0 yv 56 string2 \"Blaster    %i         %3i     %3i\" ", //Getting values
+		//sk,
+		//level.level_name,
+		//game.helpmessage1,
+		//game.helpmessage2,
+		//level.killed_monsters, level.total_monsters, 
+		//level.found_goals, level.total_goals,
+		//level.found_secrets, level.total_secrets,
+		playerLevel, playerXP, XPtable2(playerLevel),
 		shotgun->level, shotgun->XP, XPtable2(shotgun->level) - shotgun->XP,
 		blaster->level, blaster->XP, XPtable2(blaster->level) - blaster->XP);
 

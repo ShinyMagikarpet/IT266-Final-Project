@@ -837,7 +837,7 @@ void Weapon_Blaster_Fire (edict_t *ent)
 	if (deathmatch->value)
 		damage = 15;
 	else
-		damage = (10 * ent->client->pers.weapon->level)  ; //Applying level to damage
+		damage = (10 + ent->client->pers.weapon->level)  ; //Applying level to damage
 	Blaster_Fire (ent, vec3_origin, damage, false, EF_BLASTER);
 	ent->client->ps.gunframe++;
 

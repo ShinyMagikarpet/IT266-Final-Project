@@ -1920,20 +1920,20 @@ void LevelWeaponUp(edict_t *ent, int XP) {
 	if (didLevelUp) {
 		gi.bprintf(PRINT_HIGH, "The Weapon has leveled up!\n");
 
-		//Green particles code from mp spawn
+		//Red particles code from mp Logout
 		if (!ent->client->pers.spectator) {
 			// send effect
 			gi.WriteByte(svc_muzzleflash);
 			gi.WriteShort(ent - g_edicts);
-			gi.WriteByte(MZ_LOGIN);
+			gi.WriteByte(MZ_LOGOUT);
 			gi.multicast(ent->s.origin, MULTICAST_PVS);
 		}
 	}
 
 
 
-	gi.bprintf(PRINT_HIGH, "You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
-	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n \n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
+	//gi.bprintf(PRINT_HIGH, "You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
+	//gi.bprintf(PRINT_HIGH, "%s level is: %i.\n \n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
 }
 
 void LevelPlayerUp(edict_t *ent, int XP) {
@@ -1947,10 +1947,21 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 		ent->client->pers.playerLevel++;
 		playerLevel++;
 		didLevelUp = true;
+		ent->max_health += 5;
+		ent->health = ent->max_health;
 	}
 
 	if (didLevelUp) {
 		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
+
+		//Green particles code from mp sp
+		if (!ent->client->pers.spectator) {
+			// send effect
+			gi.WriteByte(svc_muzzleflash);
+			gi.WriteShort(ent - g_edicts);
+			gi.WriteByte(MZ_LOGIN);
+			gi.multicast(ent->s.origin, MULTICAST_PVS);
+		}
 	}
 	
 
