@@ -599,6 +599,9 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.selected_item = ITEM_INDEX(item);
 	client->pers.inventory[client->pers.selected_item] = 1;
 
+	item = FindItem("Sword");
+	client->pers.inventory[ITEM_INDEX(item)] = 1;
+
 
 	client->pers.weapon = item;
 	client->pers.health			= 150;
@@ -625,9 +628,9 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.LEVELS[9]		= 540;
 	*/
 	client->pers.max_armor		= 100;
-	//client->pers.inventory[1]	= 50; //armor value	
-	client->pers.inventory[18]	= 69; //shotgun ammo
-	client->pers.inventory[22]	= 69; //railgun ammo
+	//client->pers.inventory[1]	= 50; //armor value
+	item = FindItem("Shells");
+	client->pers.inventory[ITEM_INDEX(item)]	= 69; //shotgun ammo
 	
 
 	client->pers.connected = true;

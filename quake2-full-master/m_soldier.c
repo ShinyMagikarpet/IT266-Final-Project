@@ -1130,6 +1130,7 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 
 
 // check for gib
+	/* 
 	if (self->health <= self->gib_health)
 	{
 		gi.sound (self, CHAN_VOICE, gi.soundindex ("misc/udeath.wav"), 1, ATTN_NORM, 0);
@@ -1140,10 +1141,11 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 		self->deadflag = DEAD_DEAD;
 		return;
 	}
-
+	*/
 	if (self->deadflag == DEAD_DEAD)
 		return;
-
+	
+	
 // regular death
 	self->deadflag = DEAD_DEAD;
 	self->takedamage = DAMAGE_YES;

@@ -290,6 +290,7 @@ void HelpComputer (edict_t *ent)
 {
 	char	string[1024];
 	char	*sk;
+	gitem_t *item; // -Dembner
 
 	if (skill->value == 0)
 		sk = "easy";
@@ -300,8 +301,12 @@ void HelpComputer (edict_t *ent)
 	else
 		sk = "hard+";
 
-	gitem_t *blaster = &itemlist[7];
-	gitem_t *shotgun = &itemlist[8];
+	item = FindItem("Blaster");
+	gitem_t *blaster = &itemlist[ITEM_INDEX(item)];
+	item = FindItem("Shotgun");
+	gitem_t *shotgun = &itemlist[ITEM_INDEX(item)];
+	item = FindItem("Sword");
+	gitem_t *sword = &itemlist[ITEM_INDEX(item)];
 	int playerLevel, playerXP;
 	playerLevel = ent->client->pers.playerLevel;
 	playerXP = ent->client->pers.playerXP;
@@ -322,7 +327,8 @@ void HelpComputer (edict_t *ent)
 		"xv 0 yv 12 string2 \"           %i         %.4i   %.4i     \" "
 		"xv 0 yv 32 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
 		"xv 0 yv 44 string2 \"Shotgun    %i         %.4i   %.4i\" "
-		"xv 0 yv 56 string2 \"Blaster    %i         %.4i   %.4i\" ", //Getting values
+		"xv 0 yv 56 string2 \"Blaster    %i         %.4i   %.4i\" "
+		"xv 0 yv 68 string2 \"Sword      %i         %.4i   %.4i\" ", //Getting values
 		//sk,
 		//level.level_name,
 		//game.helpmessage1,
@@ -332,7 +338,8 @@ void HelpComputer (edict_t *ent)
 		//level.found_secrets, level.total_secrets,
 		playerLevel, playerXP, XPtable2(playerLevel) - playerXP,
 		shotgun->level, shotgun->XP, XPtable2(shotgun->level) - shotgun->XP,
-		blaster->level, blaster->XP, XPtable2(blaster->level) - blaster->XP);
+		blaster->level, blaster->XP, XPtable2(blaster->level) - blaster->XP,
+		sword->level, sword->XP, XPtable2(sword->level) - sword->XP);
 
 	gi.WriteByte (svc_layout);
 	gi.WriteString (string);

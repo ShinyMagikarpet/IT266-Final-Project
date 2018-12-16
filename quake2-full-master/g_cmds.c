@@ -399,6 +399,19 @@ void Cmd_Use_f (edict_t *ent)
 		return;
 	}
 
+	//Sword Code
+	else if (!Q_stricmp(s, ent->client->pers.weapon->pickup_name))
+	{
+		if (!Q_stricmp(s, "Blaster")) {
+			it = FindItem("Sword");
+
+		}
+		else if (!Q_stricmp(s, "Shotgun")) {
+			it = FindItem("SuperShotgun");
+		}
+
+	}
+
 	it->use (ent, it);
 }
 
@@ -849,7 +862,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 	//Was used for general testing - Dembner
-	//gi.bprintf(PRINT_HIGH, "Current weapon Level: %i.\n", ent->client->pers.weapon->level);
+	gi.bprintf(PRINT_HIGH, "Current weapon XP : %i.\n", ent->client->pers.weapon->XP);
 }
 
 void Cmd_PlayerList_f(edict_t *ent)

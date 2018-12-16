@@ -1903,9 +1903,9 @@ void LevelWeaponUp(edict_t *ent, int XP) {
 		gi.dprintf("LUL something is wrong\n");
 	}
 	*/
-
+	
 	ent->client->pers.weapon->XP += XP;
-
+	
 	int weaponXP = ent->client->pers.weapon->XP;
 	qboolean didLevelUp = false;
 
@@ -1929,7 +1929,7 @@ void LevelWeaponUp(edict_t *ent, int XP) {
 			gi.multicast(ent->s.origin, MULTICAST_PVS);
 		}
 	}
-
+	
 
 
 	//gi.bprintf(PRINT_HIGH, "You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
@@ -1937,6 +1937,7 @@ void LevelWeaponUp(edict_t *ent, int XP) {
 }
 
 void LevelPlayerUp(edict_t *ent, int XP) {
+
 
 	qboolean didLevelUp = false;
 	ent->client->pers.playerXP += XP;
