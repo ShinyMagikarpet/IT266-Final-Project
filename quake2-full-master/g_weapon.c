@@ -257,7 +257,6 @@ pistols, rifles, etc....
 */
 void fire_bullet (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int hspread, int vspread, int mod)
 {
-	self->modWeapon = mod;
 	fire_lead (self, start, aimdir, damage, kick, TE_GUNSHOT, hspread, vspread, mod);
 }
 
@@ -272,7 +271,6 @@ Shoots shotgun pellets.  Used by shotgun and super shotgun.
 void fire_shotgun (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick, int hspread, int vspread, int count, int mod)
 {
 	int		i;
-	self->modWeapon = mod;
 	for (i = 0; i < count; i++)
 		fire_lead (self, start, aimdir, damage, kick, TE_SHOTGUN, hspread, vspread, mod);
 }
@@ -308,7 +306,6 @@ void blaster_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *
 		else
 			mod = MOD_BLASTER;
 
-		self->modWeapon = mod;
 		T_Damage (other, self, self->owner, self->velocity, self->s.origin, plane->normal, self->dmg, 1, DAMAGE_ENERGY, mod);
 	}
 	else
@@ -372,7 +369,8 @@ void fire_blaster (edict_t *self, vec3_t start, vec3_t dir, int damage, int spee
 		bolt->touch (bolt, tr.ent, NULL, NULL);
 	}
 
-	gi.bprintf(PRINT_HIGH, "Damage for weapon %s is: %i\n", self->client->pers.weapon->classname, damage);
+	//TESTING PURPOSES ONLY AS ONE OF THE SOLDIERS SHARES THIS TO ATTACK AND CAN RESULT IN CRASH!
+	//gi.bprintf(PRINT_HIGH, "Damage for weapon %s is: %i\n", self->client->pers.weapon->classname, damage);
 }	
 
 
@@ -406,7 +404,6 @@ static void Grenade_Explode (edict_t *ent)
 		else
 			mod = MOD_GRENADE;
 
-		ent->modWeapon = mod;
 		T_Damage (ent->enemy, ent, ent->owner, dir, ent->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
 	}
 
@@ -417,7 +414,6 @@ static void Grenade_Explode (edict_t *ent)
 	else
 		mod = MOD_G_SPLASH;
 
-	ent->modWeapon = mod;
 	T_RadiusDamage(ent, ent->owner, ent->dmg, ent->enemy, ent->dmg_radius, mod);
 
 	VectorMA (ent->s.origin, -0.02, ent->velocity, origin);
@@ -578,7 +574,6 @@ void rocket_touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *su
 
 	if (other->takedamage)
 	{
-		ent->modWeapon = MOD_ROCKET;
 		T_Damage (other, ent, ent->owner, ent->velocity, ent->s.origin, plane->normal, ent->dmg, 0, 0, MOD_ROCKET);
 	}
 	else
@@ -594,7 +589,6 @@ void rocket_touch (edict_t *ent, edict_t *other, cplane_t *plane, csurface_t *su
 			}
 		}
 	}
-	ent->modWeapon = MOD_R_SPLASH;
 	T_RadiusDamage(ent, ent->owner, ent->radius_dmg, other, ent->dmg_radius, MOD_R_SPLASH);
 
 	gi.WriteByte (svc_temp_entity);
@@ -680,7 +674,6 @@ void fire_rail (edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 
 			if ((tr.ent != self) && (tr.ent->takedamage)){
 				T_Damage (tr.ent, self, self, aimdir, tr.endpos, tr.plane.normal, damage, kick, 0, MOD_RAILGUN);
-				self->modWeapon = MOD_RAILGUN;
 			}
 		}
 
@@ -747,7 +740,6 @@ void bfg_explode (edict_t *self)
 			gi.WriteByte (TE_BFG_EXPLOSION);
 			gi.WritePosition (ent->s.origin);
 			gi.multicast (ent->s.origin, MULTICAST_PHS);
-			self->modWeapon = MOD_BFG_EFFECT;
 			T_Damage (ent, self, self->owner, self->velocity, ent->s.origin, vec3_origin, (int)points, 0, DAMAGE_ENERGY, MOD_BFG_EFFECT);
 		}
 	}
@@ -775,10 +767,8 @@ void bfg_touch (edict_t *self, edict_t *other, cplane_t *plane, csurface_t *surf
 	// core explosion - prevents firing it into the wall/floor
 	if (other->takedamage) {
 		T_Damage(other, self, self->owner, self->velocity, self->s.origin, plane->normal, 200, 0, 0, MOD_BFG_BLAST);
-		self->modWeapon = MOD_BFG_BLAST;
 	}
 	T_RadiusDamage(self, self->owner, 200, other, 100, MOD_BFG_BLAST);
-	self->modWeapon = MOD_BFG_BLAST;
 
 	gi.sound (self, CHAN_VOICE, gi.soundindex ("weapons/bfg__x1b.wav"), 1, ATTN_NORM, 0);
 	self->solid = SOLID_NOT;
@@ -850,7 +840,6 @@ void bfg_think (edict_t *self)
 			if ((tr.ent->takedamage) && !(tr.ent->flags & FL_IMMUNE_LASER) && (tr.ent != self->owner))
 				T_Damage (tr.ent, self, self->owner, dir, tr.endpos, vec3_origin, dmg, 1, DAMAGE_ENERGY, MOD_BFG_LASER);
 
-			self->modWeapon = MOD_BFG_LASER;
 
 			// if we hit something that's not a monster or player we're done
 			if (!(tr.ent->svflags & SVF_MONSTER) && (!tr.ent->client))

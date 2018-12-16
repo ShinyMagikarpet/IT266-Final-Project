@@ -1126,7 +1126,7 @@ mmove_t soldier_move_death6 = {FRAME_death601, FRAME_death610, soldier_frames_de
 
 void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage, vec3_t point)
 {
-	int		n, mod, xpVal;
+	int		n, xpVal;
 
 
 // check for gib
@@ -1152,23 +1152,23 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	if (self->s.skinnum == 1) {
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Light"); //Test to see which character dies
 		gi.sound(self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
-		xpVal = 15;
+		xpVal = 10;
 	}
 	else if (self->s.skinnum == 3) {
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
 		gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
-		xpVal = 30;
+		xpVal = 20;
 	}
 	else { // (self->s.skinnum == 5)
 		gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
 		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
-		xpVal = 45;
+		xpVal = 30;
 	}
 
-	mod = inflictor->modWeapon;
-	LevelPlayerUp(attacker, xpVal);
-	LevelWeaponUp(attacker, mod, xpVal);
 
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
+	
 	if (fabs((self->s.origin[2] + self->viewheight) - point[2]) <= 4)
 	{
 		// head shot

@@ -314,8 +314,8 @@ void HelpComputer (edict_t *ent)
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
 		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" "
 		"xv 350 yv 12 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
-		"xv 350 yv 24 string2 \"Shotgun    %i         %i      %i\" "
-		"xv 350 yv 32 string2 \"Blaster    %i         %i      %i\" ", //Getting values
+		"xv 350 yv 24 string2 \"Shotgun    %i         %i     %2i\" "
+		"xv 350 yv 32 string2 \"Blaster    %i         %i     %2i\" ", //Getting values
 		sk,
 		level.level_name,
 		game.helpmessage1,

@@ -382,7 +382,6 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 		}
 	}
 	meansOfDeath = mod;
-	inflictor->modWeapon = meansOfDeath;
 
 	// easy mode takes half damage
 	if (skill->value == 0 && deathmatch->value == 0 && targ->client)
@@ -552,7 +551,6 @@ void T_RadiusDamage (edict_t *inflictor, edict_t *attacker, float damage, edict_
 			if (CanDamage (ent, inflictor))
 			{
 				VectorSubtract (ent->s.origin, inflictor->s.origin, dir);
-				inflictor->modWeapon = meansOfDeath;
 				T_Damage (ent, inflictor, attacker, dir, inflictor->s.origin, vec3_origin, (int)points, (int)points, DAMAGE_RADIUS, mod);
 			}
 		}

@@ -1870,39 +1870,7 @@ int XPtable(int level) { //XP table
 
 }
 
-void LevelPlayerUp(edict_t *ent, int XP) {
-
-	qboolean didLevelUp = false;
-	ent->client->pers.playerXP += XP;
-	//New and improved version of level check that now loops through
-	//the array as the player may get more xp than target level!!!
-	int playerLevel = ent->client->pers.playerLevel;
-	while (ent->client->pers.playerXP >= XPtable(playerLevel)) {
-		ent->client->pers.playerLevel++;
-		playerLevel++;
-		didLevelUp = true;
-	}
-
-	if (didLevelUp) {
-		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
-	}
-	
-
-	//Old inferior version of level check!!!
-	/*
-	if (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
-		ent->client->pers.playerLevel ++;
-		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
-		gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
-	}
-	*/
-	gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
-	int xpToNext = XPtable(playerLevel++) - ent->client->pers.playerXP;
-	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n \n", xpToNext);
-}
-
-
-void LevelWeaponUp(edict_t *ent, int mod, int XP) {
+void LevelWeaponUp(edict_t *ent, int XP) {
 
 	/* This was my old method however I found a much more reliable and cleaner way to give weapon xp
 	switch (mod)
@@ -1937,24 +1905,72 @@ void LevelWeaponUp(edict_t *ent, int mod, int XP) {
 	*/
 
 	ent->client->pers.weapon->XP += XP;
+
+	int weaponXP = ent->client->pers.weapon->XP;
 	qboolean didLevelUp = false;
 
 	int weaponLevel = ent->client->pers.weapon->level;
-	while (ent->client->pers.playerXP >= XPtable(weaponLevel)) {
-		ent->client->pers.weapon->level++;
+	while (weaponXP >= XPtable(weaponLevel)) {
 		weaponLevel++;
 		didLevelUp = true;
 	}
 
+	ent->client->pers.weapon->level = weaponLevel;
+
 	if (didLevelUp) {
 		gi.bprintf(PRINT_HIGH, "The Weapon has leveled up!\n");
+
+		//Green particles code from mp spawn
+		if (!ent->client->pers.spectator) {
+			// send effect
+			gi.WriteByte(svc_muzzleflash);
+			gi.WriteShort(ent - g_edicts);
+			gi.WriteByte(MZ_LOGIN);
+			gi.multicast(ent->s.origin, MULTICAST_PVS);
+		}
 	}
 
 
 
-	gi.bprintf(PRINT_HIGH,"You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
+	gi.bprintf(PRINT_HIGH, "You killed with: %s and xp is now %i.\n", ent->client->pers.weapon->classname, ent->client->pers.weapon->XP);
 	gi.bprintf(PRINT_HIGH, "%s level is: %i.\n \n", ent->client->pers.weapon->classname, ent->client->pers.weapon->level);
 }
+
+void LevelPlayerUp(edict_t *ent, int XP) {
+
+	qboolean didLevelUp = false;
+	ent->client->pers.playerXP += XP;
+	//New and improved version of level check that now loops through
+	//the array as the player may get more xp than target level!!!
+	int playerLevel = ent->client->pers.playerLevel;
+	while (ent->client->pers.playerXP >= XPtable(playerLevel)) {
+		ent->client->pers.playerLevel++;
+		playerLevel++;
+		didLevelUp = true;
+	}
+
+	if (didLevelUp) {
+		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
+	}
+	
+
+	//Old inferior version of level check!!!
+	/*
+	if (ent->client->pers.playerXP >= ent->client->pers.LEVELS[playerLevel]) {
+		ent->client->pers.playerLevel ++;
+		gi.bprintf(PRINT_HIGH, "The Player has leveled up!\n");
+		gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
+	}
+	
+	gi.bprintf(PRINT_HIGH, "Player level: %i\n", ent->client->pers.playerLevel);
+	int xpToNext = XPtable(playerLevel++) - ent->client->pers.playerXP;
+	gi.bprintf(PRINT_HIGH, "XP to next level is %i\n \n", xpToNext);
+
+	*/
+}
+
+
+
 
 
 

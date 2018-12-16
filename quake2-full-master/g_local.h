@@ -238,8 +238,8 @@ typedef struct gitem_s
 	void		*info;
 	int			tag;
 
-	int			XP; // total xp of weapon
-	int			level; //Level of weapon
+	int			XP; // total xp of weapon - Dembner
+	int			level; //Level of weapon - Dembner
 
 	char		*precaches;		// string of all models, sounds, and images this item will use
 
@@ -852,7 +852,6 @@ typedef struct
 
 	int			playerXP;
 	int			playerLevel;
-	int			LEVELS[30];
 	int			max_armor;
 
 } client_persistant_t;
@@ -1103,7 +1102,6 @@ struct edict_s
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
 
-	int modWeapon;
 	
 };
 

@@ -849,7 +849,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 
-	gi.bprintf(PRINT_HIGH, "Current weapon XP: %i.\n", ent->client->pers.weapon->XP);
+	gi.bprintf(PRINT_HIGH, "Current weapon Level: %i.\n", ent->client->pers.weapon->level);
 }
 
 void Cmd_PlayerList_f(edict_t *ent)
@@ -881,6 +881,8 @@ void Cmd_PlayerList_f(edict_t *ent)
 	}
 	gi.cprintf(ent, PRINT_HIGH, "%s", text);
 }
+
+
 
 /*
 Get Level of stuff
@@ -933,7 +935,11 @@ void ClientCommand (edict_t *ent)
 		Cmd_Help_f (ent);
 		return;
 	}
-
+	if (Q_stricmp(cmd, "givexp") == 0)
+	{
+		Cmd_Get_Level_f(ent);
+		return;
+	}
 	if (level.intermissiontime)
 		return;
 
