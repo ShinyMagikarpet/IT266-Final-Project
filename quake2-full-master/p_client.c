@@ -604,8 +604,8 @@ void InitClientPersistant (gclient_t *client)
 
 
 	client->pers.weapon = item;
-	client->pers.health			= 150;
-	client->pers.max_health		= 200;
+	client->pers.health			= 100;
+	client->pers.max_health		= 100;
 	client->pers.max_bullets	= 200;
 	client->pers.max_shells		= 100;
 	client->pers.max_rockets	= 50;
@@ -631,10 +631,10 @@ void InitClientPersistant (gclient_t *client)
 	//client->pers.inventory[1]	= 50; //armor value
 	item = FindItem("Shells");
 	client->pers.inventory[ITEM_INDEX(item)]	= 69; //shotgun ammo
-	
+	client->pers.jumpSpeed = 350;
 
 	client->regenrate = 0;
-
+	
 	client->pers.connected = true;
 
 
@@ -1603,15 +1603,15 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 		//apparently this game doesn't like the idea of crounching and jumping at the same time
 
 
-		ent->ClassSpeed = 8;
+		ent->classSpeed = 7;
 		float ClassSpeedModifer, t;
 		vec3_t velo;
 		vec3_t  end, forward, right, up, add;
-		ClassSpeedModifer = ent->ClassSpeed * 0.2;
+		ClassSpeedModifer = ent->classSpeed * 0.2;
 		//Figure out speed
 		VectorClear(velo);
 		AngleVectors(ent->client->v_angle, forward, right, up);
-		VectorScale(forward, ucmd->forwardmove+(100*100), end);
+		VectorScale(forward, ucmd->forwardmove+1000, end);
 		VectorAdd(end, velo, velo);
 		AngleVectors(ent->client->v_angle, forward, right, up);
 		VectorScale(right, ucmd->sidemove*ClassSpeedModifer, end);
@@ -1642,8 +1642,9 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 			velo[2] *= 0.6;
 			ClassSpeedModifer *= 0.6;
 		}
-		if (ent->groundentity)//add 
+		if (ent->groundentity) {//add 
 			VectorAdd(velo, ent->velocity, ent->velocity);
+		}
 		else if (ent->waterlevel)
 			VectorAdd(velo, ent->velocity, ent->velocity);
 		else
@@ -1658,7 +1659,7 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 		t = VectorLength(ent->velocity);
 		if (t > 300 * ClassSpeedModifer || t < -300 * ClassSpeedModifer)
 		{
-			VectorScale(ent->velocity, 300 * ClassSpeedModifer / t, ent->velocity);
+			VectorScale(ent->velocity, ent->client->pers.jumpSpeed * ClassSpeedModifer / t, ent->velocity);
 		}
 
 		//Set these to 0 so pmove thinks we aren't pressing forward or sideways since we are handling all the player forward and sideways speeds

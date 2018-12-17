@@ -813,7 +813,6 @@ void GetChaseTarget(edict_t *ent);
 #define	ANIM_DEATH		5
 #define	ANIM_REVERSE	6
 
-
 // client data that stays across multiple level loads
 typedef struct
 {
@@ -854,6 +853,7 @@ typedef struct
 	int			playerXP;
 	int			playerLevel;
 	int			max_armor;
+	int			jumpSpeed;
 
 } client_persistant_t;
 
@@ -1106,9 +1106,9 @@ struct edict_s
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
 
-	int ClassSpeed;
+	int classSpeed;
+	
 };
-
 //Sword Defines
 #define SWORD_KICK 999
 #define SWORD_RANGE 35

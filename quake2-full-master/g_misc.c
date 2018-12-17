@@ -1918,7 +1918,7 @@ void LevelWeaponUp(edict_t *ent, int XP) {
 	ent->client->pers.weapon->level = weaponLevel;
 
 	if (didLevelUp) {
-		gi.bprintf(PRINT_HIGH, "The Weapon has leveled up!\n");
+		gi.bprintf(PRINT_HIGH, "%s has leveled up!\n", ent->client->pers.weapon->pickup_name);
 
 		//Red particles code from mp Logout
 		if (!ent->client->pers.spectator) {

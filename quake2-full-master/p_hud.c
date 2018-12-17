@@ -310,7 +310,6 @@ void HelpComputer (edict_t *ent)
 	int playerLevel, playerXP;
 	playerLevel = ent->client->pers.playerLevel;
 	playerXP = ent->client->pers.playerXP;
-	
 
 	// send the layout
 	Com_sprintf (string, sizeof(string),

@@ -862,7 +862,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 	//Was used for general testing - Dembner
-	gi.bprintf(PRINT_HIGH, "Current weapon XP : %i.\n", ent->client->pers.weapon->XP);
+	//gi.bprintf(PRINT_HIGH, "Current player name : %s.\n", ent->client->pers.playerName);
 }
 
 void Cmd_PlayerList_f(edict_t *ent)
@@ -900,8 +900,12 @@ void Cmd_PlayerList_f(edict_t *ent)
 /*
 Get Level of stuff
 */
-void Cmd_Get_Level_f(edict_t *ent) {
-
+void Cmd_Jump_Speed_f(edict_t *ent) {
+	char *userIn;
+	userIn = gi.args();
+	int speed = atoi(userIn);
+	ent->client->pers.jumpSpeed = speed;
+	gi.bprintf(PRINT_HIGH, "Successfully changed jump speed to: %i.\n", ent->client->pers.jumpSpeed);
 
 
 }
@@ -948,9 +952,9 @@ void ClientCommand (edict_t *ent)
 		Cmd_Help_f (ent);
 		return;
 	}
-	if (Q_stricmp(cmd, "givexp") == 0)
+	if (Q_stricmp(cmd, "jumpspeed") == 0)
 	{
-		Cmd_Get_Level_f(ent);
+		Cmd_Jump_Speed_f(ent);
 		return;
 	}
 	if (level.intermissiontime)
