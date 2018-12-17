@@ -275,6 +275,9 @@ typedef struct
 	// items
 	int			num_items;
 
+	// frames
+	int			num_frames;
+
 	qboolean	autosaved;
 } game_locals_t;
 
@@ -588,7 +591,6 @@ extern	gitem_t	itemlist[];
 //
 void Cmd_Help_f (edict_t *ent);
 void Cmd_Score_f (edict_t *ent);
-void Cmd_GetXp_f(edict_t *ent);
 
 //
 // g_items.c
@@ -813,6 +815,32 @@ void GetChaseTarget(edict_t *ent);
 #define	ANIM_DEATH		5
 #define	ANIM_REVERSE	6
 
+//=====================
+//=== Dembner Begin ===
+//=====================
+
+typedef struct
+{
+
+
+	// values saved and restored from edicts when changing levels
+	char		*name;
+	int			health;
+	int			max_health;
+	int			XP;
+	int			Level;
+	int			max_armor;
+
+} g_frame_t;
+
+g_frame_t	*FindFrame(char *pickup_name);
+extern	g_frame_t	framelist[];
+void InitFrames(void);
+
+//=====================
+//==== End Dembner ====
+//=====================
+
 // client data that stays across multiple level loads
 typedef struct
 {
@@ -854,6 +882,7 @@ typedef struct
 	int			playerLevel;
 	int			max_armor;
 	int			jumpSpeed;
+	g_frame_t	*frame;
 
 } client_persistant_t;
 
@@ -1110,5 +1139,5 @@ struct edict_s
 	
 };
 //Sword Defines
-#define SWORD_KICK 999
+#define SWORD_KICK 300
 #define SWORD_RANGE 35

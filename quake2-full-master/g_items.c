@@ -2310,3 +2310,54 @@ void SetItemNames (void)
 	power_screen_index = ITEM_INDEX(FindItem("Power Screen"));
 	power_shield_index = ITEM_INDEX(FindItem("Power Shield"));
 }
+
+//==================================================
+g_frame_t	*FindFrame(char *pickup_name)
+{
+	int		i;
+	g_frame_t	*frame;
+	frame = framelist;
+	for (i = 0; i < game.num_frames; i++, frame++) //Hate myself for hardcoding this but idk how to get size of array
+	{
+		if (!frame->name)
+			continue;
+		if (!Q_stricmp(frame->name, pickup_name))
+			return frame;
+	}
+	//gi.dprintf("length is %i\n", length);
+	
+	return NULL;
+}
+
+g_frame_t	framelist[] =
+{
+	{
+		NULL
+	},	// leave index 0 alone
+
+	{
+		"Excalibur",
+		100,
+		100,
+		0,
+		1,
+		100
+	},
+
+	{
+		"Rhino",
+		150,
+		150,
+		0,
+		1,
+		200
+	},
+
+	// end of list marker
+	{NULL}
+};
+
+void InitFrames(void)
+{
+	game.num_frames = sizeof(framelist) / sizeof(framelist[0]) - 1;
+}

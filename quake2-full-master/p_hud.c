@@ -311,6 +311,9 @@ void HelpComputer (edict_t *ent)
 	playerLevel = ent->client->pers.playerLevel;
 	playerXP = ent->client->pers.playerXP;
 
+	g_frame_t *frame = ent->client->pers.frame;
+	
+
 	// send the layout
 	Com_sprintf (string, sizeof(string),
 		/*
@@ -322,12 +325,12 @@ void HelpComputer (edict_t *ent)
 		"xv 50 yv 164 string2 \" kills     goals    secrets\" "
 		"xv 50 yv 172 string2 \"%3i/%3i     %i/%i       %i/%i\" "
 		*/
-		"xv 0 yv 0 string2 \"Player     Level     XP     ToNextLvl     \" "
-		"xv 0 yv 12 string2 \"           %i         %.4i   %.4i     \" "
+		"xv 0 yv 0 string2 \"Frame     Level     XP     ToNextLvl     \" "
+		"xv 0 yv 12 string2 \"%s  %3i         %.4i   %.4i     \" "
 		"xv 0 yv 32 string2 \"Weapon     Level     XP     ToNextLvl     \" " //Header for weapons and their xp values
 		"xv 0 yv 44 string2 \"Shotgun    %i         %.4i   %.4i\" "
 		"xv 0 yv 56 string2 \"Blaster    %i         %.4i   %.4i\" "
-		"xv 0 yv 68 string2 \"Sword      %i         %.4i   %.4i\" ", //Getting values
+		"xv 0 yv 68 string2 \"Sword      %i         %.4i   %.4i\" ",
 		//sk,
 		//level.level_name,
 		//game.helpmessage1,
@@ -335,7 +338,7 @@ void HelpComputer (edict_t *ent)
 		//level.killed_monsters, level.total_monsters, 
 		//level.found_goals, level.total_goals,
 		//level.found_secrets, level.total_secrets,
-		playerLevel, playerXP, XPtable2(playerLevel) - playerXP,
+		frame->name, frame->Level, frame->XP, XPtable2(frame->Level) - frame->XP,
 		shotgun->level, shotgun->XP, XPtable2(shotgun->level) - shotgun->XP,
 		blaster->level, blaster->XP, XPtable2(blaster->level) - blaster->XP,
 		sword->level, sword->XP, XPtable2(sword->level) - sword->XP);

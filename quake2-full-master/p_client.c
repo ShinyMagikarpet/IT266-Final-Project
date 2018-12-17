@@ -604,8 +604,6 @@ void InitClientPersistant (gclient_t *client)
 
 
 	client->pers.weapon = item;
-	client->pers.health			= 100;
-	client->pers.max_health		= 100;
 	client->pers.max_bullets	= 200;
 	client->pers.max_shells		= 100;
 	client->pers.max_rockets	= 50;
@@ -613,31 +611,27 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.max_cells		= 200;
 	client->pers.max_slugs		= 100; //was set to 50
 
-	client->pers.playerLevel	= 1; //Sets player level to 1 when game starts
-	client->pers.playerXP		= 0;//Sets player XP to 0 when game starts
-	/*
-	client->pers.LEVELS[0]		= 0; //Shoddy level table
-	client->pers.LEVELS[1]		= 15;
-	client->pers.LEVELS[2]		= 30;
-	client->pers.LEVELS[3]		= 60;
-	client->pers.LEVELS[4]		= 90;
-	client->pers.LEVELS[5]		= 150;
-	client->pers.LEVELS[6]		= 210;
-	client->pers.LEVELS[7]		= 300;
-	client->pers.LEVELS[8]		= 360;
-	client->pers.LEVELS[9]		= 540;
-	*/
-	client->pers.max_armor		= 100;
-	//client->pers.inventory[1]	= 50; //armor value
+	g_frame_t *frame;
+
+	frame = FindFrame("Excalibur"); //Your starting frame
+									//Can be changed with commands (changeframe (name) and listframes will print frames to console!)
+
+	client->pers.frame = frame;
+	client->pers.health = frame->health;
+	client->pers.max_health = frame->max_health;
+	//client->pers.playerLevel	=  frame->Level; //Player level is now obsolete to frame level
+	//client->pers.playerXP		=  frame->XP;//Player XP is now obsolete to frame xp
+	client->pers.max_armor		= frame->max_armor;
+	client->pers.inventory[1]	= frame->max_armor; //armor value
+
 	item = FindItem("Shells");
 	client->pers.inventory[ITEM_INDEX(item)]	= 69; //shotgun ammo
 	client->pers.jumpSpeed = 350;
 
 	client->regenrate = 0;
-	
 	client->pers.connected = true;
 
-
+	
 }
 
 
@@ -1597,6 +1591,10 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 	int		i, j;
 	pmove_t	pm;
 
+
+	float ClassSpeedModifer, t;
+	vec3_t velo;
+	vec3_t  end, forward, right, up, add;
 	//Code to check if the player is crouching!!!
 	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED && ent->client->buttons & BUTTON_ATTACK) {
 		//if crouching and you attack, just perform the bullet jump
@@ -1604,9 +1602,6 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 
 
 		ent->classSpeed = 7;
-		float ClassSpeedModifer, t;
-		vec3_t velo;
-		vec3_t  end, forward, right, up, add;
 		ClassSpeedModifer = ent->classSpeed * 0.2;
 		//Figure out speed
 		VectorClear(velo);
@@ -1616,43 +1611,8 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 		AngleVectors(ent->client->v_angle, forward, right, up);
 		VectorScale(right, ucmd->sidemove*ClassSpeedModifer, end);
 		VectorAdd(end, velo, velo);
-		//if not in water set it up so they aren't moving up or down when they press forward
-
-		if (ent->waterlevel == 1)//feet are in the water
-		{
-			//Water slows you down or at least I think it should
-			velo[0] *= 0.875;
-			velo[1] *= 0.875;
-			velo[2] *= 0.875;
-			ClassSpeedModifer *= 0.875;
-		}
-		else if (ent->waterlevel == 2)//waist is in the water
-		{
-			//Water slows you down or at least I think it should
-			velo[0] *= 0.75;
-			velo[1] *= 0.75;
-			velo[2] *= 0.75;
-			ClassSpeedModifer *= 0.75;
-		}
-		else if (ent->waterlevel == 3)//whole body is in the water
-		{
-			//Water slows you down or at least I think it should
-			velo[0] *= 0.6;
-			velo[1] *= 0.6;
-			velo[2] *= 0.6;
-			ClassSpeedModifer *= 0.6;
-		}
+		
 		if (ent->groundentity) {//add 
-			VectorAdd(velo, ent->velocity, ent->velocity);
-		}
-		else if (ent->waterlevel)
-			VectorAdd(velo, ent->velocity, ent->velocity);
-		else
-		{
-			//Allow for a little movement but not as much
-			velo[0] *= 0.25;
-			velo[1] *= 0.25;
-			velo[2] *= 0.25;
 			VectorAdd(velo, ent->velocity, ent->velocity);
 		}
 		//Make sure not going to fast. THis slows down grapple too

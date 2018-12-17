@@ -1940,17 +1940,20 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 
 
 	qboolean didLevelUp = false;
-	ent->client->pers.playerXP += XP;
+	ent->client->pers.frame->XP += XP; //CHANGE HERE
 	//New and improved version of level check that now loops through
 	//the array as the player may get more xp than target level!!!
-	int playerLevel = ent->client->pers.playerLevel;
-	while (ent->client->pers.playerXP >= XPtable(playerLevel)) {
-		ent->client->pers.playerLevel++;
-		playerLevel++;
+	int frameLevel = ent->client->pers.frame->Level;
+	while (ent->client->pers.frame->XP >= XPtable(frameLevel)) {
+		//ent->client->pers.playerLevel++;
+		ent->client->pers.frame->Level++;
+		ent->client->pers.frame->max_health += 5;
+		ent->client->pers.frame->max_armor += 2;
+		frameLevel++;
 		didLevelUp = true;
-		ent->max_health += 5;
+		ent->max_health = ent->client->pers.frame->max_health;
 		ent->health = ent->max_health;
-		ent->client->pers.max_armor += 2;
+		ent->client->pers.max_armor = ent->client->pers.frame->max_armor;
 	}
 
 	if (didLevelUp) {

@@ -862,7 +862,7 @@ void Cmd_Say_f (edict_t *ent, qboolean team, qboolean arg0)
 		gi.cprintf(other, PRINT_CHAT, "%s", text);
 	}
 	//Was used for general testing - Dembner
-	//gi.bprintf(PRINT_HIGH, "Current player name : %s.\n", ent->client->pers.playerName);
+	gi.bprintf(PRINT_HIGH, "Current frame max health : %i.\n", ent->client->pers.frame->max_health);
 }
 
 void Cmd_PlayerList_f(edict_t *ent)
@@ -906,6 +906,47 @@ void Cmd_Jump_Speed_f(edict_t *ent) {
 	int speed = atoi(userIn);
 	ent->client->pers.jumpSpeed = speed;
 	gi.bprintf(PRINT_HIGH, "Successfully changed jump speed to: %i.\n", ent->client->pers.jumpSpeed);
+
+
+}
+
+void Cmd_Change_Frame_f(edict_t *ent) {
+	char *name;
+	g_frame_t *frame;
+	name = gi.args();
+	
+	frame = FindFrame(name);
+	if (frame == NULL) {
+		gi.dprintf("Frame doesn't exist\n");
+	}
+	else {
+		ent->client->pers.frame = frame;
+		ent->max_health = ent->client->pers.frame->max_health;
+		ent->health = ent->max_health;
+		ent->client->pers.max_armor = ent->client->pers.frame->max_armor;
+		ent->client->pers.inventory[1] = frame->max_armor;
+	}
+
+
+}
+
+void Cmd_List_Frames_f(edict_t *ent) {
+
+	int i;
+	g_frame_t *frame;
+
+	frame = framelist;
+	for (i = 0; i < game.num_frames; i++, frame++) //Hate myself for hardcoding this but idk how to get size of array
+	{
+
+		if (frame->name == NULL) {
+			continue;
+		}
+		else {
+			gi.dprintf("%s\n", frame->name);
+		}
+		
+	}
 
 
 }
@@ -955,6 +996,15 @@ void ClientCommand (edict_t *ent)
 	if (Q_stricmp(cmd, "jumpspeed") == 0)
 	{
 		Cmd_Jump_Speed_f(ent);
+		return;
+	}
+	if (Q_stricmp(cmd, "changeframe") == 0)
+	{
+		Cmd_Change_Frame_f(ent);
+		return;
+	}
+	if (Q_stricmp(cmd, "listframes") == 0) {
+		Cmd_List_Frames_f(ent);
 		return;
 	}
 	if (level.intermissiontime)
