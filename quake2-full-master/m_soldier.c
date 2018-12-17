@@ -1152,17 +1152,17 @@ void soldier_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int dama
 	self->s.skinnum |= 1;
 	//There are 3 types of soldiers and seems that they identify with skinnum
 	if (self->s.skinnum == 1) {
-		gi.bprintf(PRINT_HIGH, "%s killed\n", "Light"); //Test to see which character dies
+		//gi.bprintf(PRINT_HIGH, "%s killed\n", "Light"); //Test to see which character dies
 		gi.sound(self, CHAN_VOICE, sound_death_light, 1, ATTN_NORM, 0);
 		xpVal = 10;
 	}
 	else if (self->s.skinnum == 3) {
-		gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
+		//gi.bprintf(PRINT_HIGH, "%s killed\n", "Medium");
 		gi.sound(self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 		xpVal = 20;
 	}
 	else { // (self->s.skinnum == 5)
-		gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
+		//gi.bprintf(PRINT_HIGH, "%s killed\n", "Heavy");
 		gi.sound(self, CHAN_VOICE, sound_death_ss, 1, ATTN_NORM, 0);
 		xpVal = 30;
 	}

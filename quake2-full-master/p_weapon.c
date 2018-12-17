@@ -1486,7 +1486,6 @@ void fire_sword(edict_t *self, vec3_t start, vec3_t aimdir, int damage, int kick
 			}
 		}
 	}
-	gi.bprintf(PRINT_HIGH, "Damage for sword is: %i.\n", damage);
 	return;
 }
 

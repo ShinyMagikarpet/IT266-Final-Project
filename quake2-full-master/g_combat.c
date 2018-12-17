@@ -475,7 +475,6 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 
 
 		targ->health = targ->health - take;
-			
 		if (targ->health <= 0)
 		{
 			if ((targ->svflags & SVF_MONSTER) || (client))
@@ -517,6 +516,7 @@ void T_Damage (edict_t *targ, edict_t *inflictor, edict_t *attacker, vec3_t dir,
 		client->damage_blood += take;
 		client->damage_knockback += knockback;
 		VectorCopy (point, client->damage_from);
+		client->timeDamageTaken = level.time;
 	}
 }
 

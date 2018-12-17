@@ -633,6 +633,8 @@ void InitClientPersistant (gclient_t *client)
 	client->pers.inventory[ITEM_INDEX(item)]	= 69; //shotgun ammo
 	
 
+	client->regenrate = 0;
+
 	client->pers.connected = true;
 
 
@@ -1595,6 +1597,78 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 	int		i, j;
 	pmove_t	pm;
 
+	//Code to check if the player is crouching!!!
+	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED && ent->client->buttons & BUTTON_ATTACK) {
+		//if crouching and you attack, just perform the bullet jump
+		//apparently this game doesn't like the idea of crounching and jumping at the same time
+
+
+		ent->ClassSpeed = 8;
+		float ClassSpeedModifer, t;
+		vec3_t velo;
+		vec3_t  end, forward, right, up, add;
+		ClassSpeedModifer = ent->ClassSpeed * 0.2;
+		//Figure out speed
+		VectorClear(velo);
+		AngleVectors(ent->client->v_angle, forward, right, up);
+		VectorScale(forward, ucmd->forwardmove+(100*100), end);
+		VectorAdd(end, velo, velo);
+		AngleVectors(ent->client->v_angle, forward, right, up);
+		VectorScale(right, ucmd->sidemove*ClassSpeedModifer, end);
+		VectorAdd(end, velo, velo);
+		//if not in water set it up so they aren't moving up or down when they press forward
+
+		if (ent->waterlevel == 1)//feet are in the water
+		{
+			//Water slows you down or at least I think it should
+			velo[0] *= 0.875;
+			velo[1] *= 0.875;
+			velo[2] *= 0.875;
+			ClassSpeedModifer *= 0.875;
+		}
+		else if (ent->waterlevel == 2)//waist is in the water
+		{
+			//Water slows you down or at least I think it should
+			velo[0] *= 0.75;
+			velo[1] *= 0.75;
+			velo[2] *= 0.75;
+			ClassSpeedModifer *= 0.75;
+		}
+		else if (ent->waterlevel == 3)//whole body is in the water
+		{
+			//Water slows you down or at least I think it should
+			velo[0] *= 0.6;
+			velo[1] *= 0.6;
+			velo[2] *= 0.6;
+			ClassSpeedModifer *= 0.6;
+		}
+		if (ent->groundentity)//add 
+			VectorAdd(velo, ent->velocity, ent->velocity);
+		else if (ent->waterlevel)
+			VectorAdd(velo, ent->velocity, ent->velocity);
+		else
+		{
+			//Allow for a little movement but not as much
+			velo[0] *= 0.25;
+			velo[1] *= 0.25;
+			velo[2] *= 0.25;
+			VectorAdd(velo, ent->velocity, ent->velocity);
+		}
+		//Make sure not going to fast. THis slows down grapple too
+		t = VectorLength(ent->velocity);
+		if (t > 300 * ClassSpeedModifer || t < -300 * ClassSpeedModifer)
+		{
+			VectorScale(ent->velocity, 300 * ClassSpeedModifer / t, ent->velocity);
+		}
+
+		//Set these to 0 so pmove thinks we aren't pressing forward or sideways since we are handling all the player forward and sideways speeds
+		ucmd->forwardmove = 0;
+		ucmd->sidemove = 0;
+
+
+	}
+	//====================================================
+
 	level.current_entity = ent;
 	client = ent->client;
 
@@ -1670,7 +1744,7 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 		client->resp.cmd_angles[0] = SHORT2ANGLE(ucmd->angles[0]);
 		client->resp.cmd_angles[1] = SHORT2ANGLE(ucmd->angles[1]);
 		client->resp.cmd_angles[2] = SHORT2ANGLE(ucmd->angles[2]);
-
+		
 		if (ent->groundentity && !pm.groundentity && (pm.cmd.upmove >= 10) && (pm.waterlevel == 0))
 		{
 			gi.sound(ent, CHAN_VOICE, gi.soundindex("*jump1.wav"), 1, ATTN_NORM, 0);
@@ -1768,16 +1842,16 @@ void ClientThink(edict_t *ent, usercmd_t *ucmd)
 	}
 
 	float regenTime = level.time;
-	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && regenTime >= 10) {
+	client->regenrate += 0.2; //This is such a stupid hack to get a decent armor regen going but whatever it works
+	if (ent->client->pers.inventory[1] < ent->client->pers.max_armor && regenTime >= ent->client->timeDamageTaken + 5 && client->regenrate >= 1) {
+		client->regenrate = 0;
 		ent->client->pers.inventory[1] += 1;
+		
 	}
-	//gi.bprintf(PRINT_HIGH, "Time: %f\n", regenTime);
 
 
-	//Code to check if the player is crouching!!!
-	if (ent->client->ps.pmove.pm_flags & PMF_DUCKED && ent->client->ps.pmove.pm_flags & PMF_JUMP_HELD) {
-		gi.dprintf("did you fucking bullet jump???\n");
-	}
+
+	
 
 
 

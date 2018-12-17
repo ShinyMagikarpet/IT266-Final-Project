@@ -4,6 +4,37 @@
   g_combat.c
   g_func.c
   g_items.c
+d:\github\it266-final-project\quake2-full-master\g_items.c(1136): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1161): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1186): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1211): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1237): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1262): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1418): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1596): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1621): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1646): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1671): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1696): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1725): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1750): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1775): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1800): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1825): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1851): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1877): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1902): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1927): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1956): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(1982): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2008): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2034): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2060): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2086): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2112): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2138): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2164): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+d:\github\it266-final-project\quake2-full-master\g_items.c(2187): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
   g_main.c
   g_misc.c
   g_monster.c
@@ -51,7 +82,7 @@
   p_weapon.c
   q_shared.c
   Generating Code...
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(C:\Users\David\Desktop\IT266\quake2-full-master\..\baseq2\game.dll) does not match the Linker's OutputFile property value (C:\Users\David\Desktop\IT266\release\gamex86.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(D:\Github\IT266-Final-Project\quake2-full-master\..\baseq2\game.dll) does not match the Linker's OutputFile property value (D:\Github\IT266-Final-Project\release\gamex86.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1218,5): warning MSB8012: TargetName(game) does not match the Linker's OutputFile property value (gamex86). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
      Creating library .\..\release/gamex86.lib and object .\..\release/gamex86.exp
-  game.vcxproj -> C:\Users\David\Desktop\IT266\quake2-full-master\..\baseq2\game.dll
+  game.vcxproj -> D:\Github\IT266-Final-Project\quake2-full-master\..\baseq2\game.dll

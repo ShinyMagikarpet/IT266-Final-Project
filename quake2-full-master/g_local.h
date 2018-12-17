@@ -952,6 +952,9 @@ struct gclient_s
 
 	edict_t		*chase_target;		// player we are chasing
 	qboolean	update_chase;		// need to update chase info?
+
+	float		timeDamageTaken;
+	float		regenrate;
 };
 
 
@@ -1103,9 +1106,9 @@ struct edict_s
 	moveinfo_t		moveinfo;
 	monsterinfo_t	monsterinfo;
 
-	
+	int ClassSpeed;
 };
 
 //Sword Defines
-#define SWORD_KICK 500
+#define SWORD_KICK 999
 #define SWORD_RANGE 35

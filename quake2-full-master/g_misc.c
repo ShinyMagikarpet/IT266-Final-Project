@@ -1950,6 +1950,7 @@ void LevelPlayerUp(edict_t *ent, int XP) {
 		didLevelUp = true;
 		ent->max_health += 5;
 		ent->health = ent->max_health;
+		ent->client->pers.max_armor += 2;
 	}
 
 	if (didLevelUp) {
