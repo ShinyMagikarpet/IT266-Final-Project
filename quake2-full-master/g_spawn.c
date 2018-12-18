@@ -682,7 +682,37 @@ char *single_statusbar =
 "	xv	148 "
 "	pic	11 "
 "endif "
+
+// Frame Level			
+"if 18 "			
+"	yb	-72 "		
+"	xl	0 "		
+"	num	4	18 "	
+"endif "			
+
+
+// Frame XP			
+"if 19 "			
+"	yb	-40 "		
+"	xl	0 "		
+"	num	4	19 "	
+"endif "
+
+// Weapon Level		
+"if 20 "
+"	yb	-72 "
+"	xr	-110 "
+"	num	4	20 "
+"endif "
+
+// Weapon XP			
+"if 21 "
+"	yb	-40 "
+"	xr	-110 "
+"	num	4	21 "
+"endif "
 ;
+
 
 char *dm_statusbar =
 "yb	-24 "

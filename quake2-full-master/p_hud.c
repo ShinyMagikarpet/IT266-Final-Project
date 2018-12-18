@@ -486,6 +486,23 @@ void G_SetStats (edict_t *ent)
 		ent->client->ps.stats[STAT_TIMER] = 0;
 	}
 
+	//Dembner - Changing UI a bit
+
+	//Frame Level
+	ent->client->ps.stats[STAT_FRAME_LEVEL] = ent->client->pers.frame->Level;
+
+	//Frame XP
+	ent->client->ps.stats[STAT_FRAME_XP] = ent->client->pers.frame->XP;
+
+	//Weapon Level
+	ent->client->ps.stats[STAT_WEAPON_LEVEL] = ent->client->pers.weapon->level;
+
+	//Weapon XP
+	ent->client->ps.stats[STAT_WEAPON_XP] = ent->client->pers.weapon->XP;
+
+
+	
+
 	//
 	// selected item
 	//

@@ -989,7 +989,10 @@ typedef enum
 #define	STAT_FLASHES			15		// cleared each frame, 1 = health, 2 = armor
 #define STAT_CHASE				16
 #define STAT_SPECTATOR			17
-
+#define	STAT_FRAME_LEVEL		18
+#define	STAT_FRAME_XP			19
+#define STAT_WEAPON_LEVEL		20
+#define STAT_WEAPON_XP			21
 #define	MAX_STATS				32
 
 
