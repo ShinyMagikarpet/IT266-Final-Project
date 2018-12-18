@@ -351,6 +351,9 @@ void chick_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int xpVal = 50;
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
 // regular death
 	self->deadflag = DEAD_DEAD;
 	self->takedamage = DAMAGE_YES;

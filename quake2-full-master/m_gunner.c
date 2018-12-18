@@ -333,6 +333,9 @@ void gunner_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int xpVal = 110;
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
 // regular death
 	gi.sound (self, CHAN_VOICE, sound_death, 1, ATTN_NORM, 0);
 	self->deadflag = DEAD_DEAD;

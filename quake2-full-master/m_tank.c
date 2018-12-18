@@ -752,6 +752,9 @@ void tank_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage,
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int xpVal = 650;
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
 // regular death
 	gi.sound (self, CHAN_VOICE, sound_die, 1, ATTN_NORM, 0);
 	self->deadflag = DEAD_DEAD;

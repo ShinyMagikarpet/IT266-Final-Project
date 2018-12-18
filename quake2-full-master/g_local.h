@@ -836,7 +836,6 @@ typedef struct
 g_frame_t	*FindFrame(char *pickup_name);
 extern	g_frame_t	framelist[];
 void InitFrames(void);
-
 //=====================
 //==== End Dembner ====
 //=====================

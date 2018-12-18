@@ -578,6 +578,9 @@ void insane_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damag
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int xpVal = 45;
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
 	gi.sound (self, CHAN_VOICE, gi.soundindex(va("player/male/death%i.wav", (rand()%4)+1)), 1, ATTN_IDLE, 0);
 
 	self->deadflag = DEAD_DEAD;

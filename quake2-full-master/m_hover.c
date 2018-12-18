@@ -539,6 +539,9 @@ void hover_die (edict_t *self, edict_t *inflictor, edict_t *attacker, int damage
 	if (self->deadflag == DEAD_DEAD)
 		return;
 
+	int xpVal = 55;
+	LevelPlayerUp(attacker, xpVal);
+	LevelWeaponUp(attacker, xpVal);
 // regular death
 	if (random() < 0.5)
 		gi.sound (self, CHAN_VOICE, sound_death1, 1, ATTN_NORM, 0);

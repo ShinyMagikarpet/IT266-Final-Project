@@ -2317,8 +2317,7 @@ g_frame_t	*FindFrame(char *pickup_name)
 	int		i;
 	g_frame_t	*frame;
 	frame = framelist;
-	for (i = 0; i < game.num_frames; i++, frame++) //Hate myself for hardcoding this but idk how to get size of array
-	{
+	for (i = 0; i < game.num_frames; i++, frame++) {
 		if (!frame->name)
 			continue;
 		if (!Q_stricmp(frame->name, pickup_name))
